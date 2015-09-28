@@ -24,21 +24,21 @@
     </head>
     <body>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-           <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
-           <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
-            <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
-        
-                    <ul class="nav nav-pills" id="navig">
-                        <li role="navigation" class="active"><a href="<?php echo base_url(); ?>uisystemcontain/home" id="home">Home</a></li>
-                        <li role="navigation" class="active"><a href="#" id="contain">contain</a></li>
-                        <li role="navigation" id="navig"><a href="<?php echo base_url(); ?>account/logout" id="logout">Logout</a></li>
-                    </ul> 
-            <div>
-        
-         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
 
-    </body>
+        <ul class="nav nav-pills" id="navig">
+            <li role="navigation" class="active"><a href="<?php echo base_url(); ?>uisystemcontain/home" id="home">Home</a></li>
+            <li role="navigation" class="active"><a href="#" id="contain">contain</a></li>
+            <li role="navigation" id="navig"><a href="<?php echo base_url(); ?>account/logout" id="logout">Logout</a></li>
+        </ul> 
+        <div>
+
+        </script>
+
+</body>
 </html>
