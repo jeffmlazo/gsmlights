@@ -28,7 +28,7 @@ class Account_model extends CI_Model {
     }
 
     /**
-     * 
+     * Get all accounts
      * @return all accounts
      */
     public function getAccounts() {
@@ -38,12 +38,10 @@ class Account_model extends CI_Model {
     /**
      * Get the account of the user by username and password.
      * @param $username the user's username
-     * @param $password the user's password
      * $return the user
      */
-    public function getUser($username, $password) {
+    public function getUser($username) {
         $this->db->where('username', $username);
-        $this->db->where('password', $password);
         return $this->db->get('user')->row();
     }
 }

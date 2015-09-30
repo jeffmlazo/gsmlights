@@ -33,35 +33,59 @@
         <!--Include all compiled plugins (below), or include individual files as needed-->
         <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
+
+        <!--Custom JQuery Libraries-->
+        <script src="<?php echo base_url(); ?>assets/js/jquery.alertDisplay.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.form.js"></script>
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
+            <!--            <li role="presentation" class="active">
+                            <a href="<?php // echo base_url();            ?>uisystemcontain/home" id="home">Home</a>
+                        </li>-->
             <li role="presentation" class="active">
-                <a href="<?php echo base_url(); ?>uisystemcontain/home" id="home">Home</a>
+                <a href="#" id="registration">Registration</a>
             </li>
             <li role="presentation">
                 <a href="#" id="file">File</a>
             </li>
             <li role="presentation">
-                <a href="#" id="registration">Registration</a>
-            </li>
-            <li role="presentation">
                 <a href="#" id="message">Message</a>
             </li>
             <li role="presentation">
-                <a href="<?php echo base_url(); ?>account/logout" id="logout">Logout</a>
+                <a href="#" id="logout">Logout</a>
             </li>
         </ul>
 
         <div class="container-fluid">
             <div class="row" style="margin-top: 20px;">
                 <div id="main-content">
-                    <?php $this->load->view('contents/registration');?>
+                    <?php
+                    $data = array($job_title_options, $department_options);
+                    $this->load->view('contents/registration', $data);
+                    ?>
                 </div>
             </div>
         </div>
 
+        <script>
+            $(function() {
+                $('#navs a').on('click', function(e) {
+                    e.preventDefault();
+                    var id = $(this).attr('id');
+
+                    if(id === 'logout') {
+                        document.location.href = '<?php echo base_url(); ?>account/logout';
+                    } else {
+                        // Adds a class for active in the nav
+                        $(this).tab('show');
+                        $.get('<?php echo base_url() ?>uisystemcontain/navs/' + id, function(response) {
+                            $('#main-content').html(response);
+                        });
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
