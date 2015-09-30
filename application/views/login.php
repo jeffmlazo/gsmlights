@@ -20,7 +20,7 @@
         <![endif]-->
 
         <style>
-            body {     background-image: url("assets/image/grid.jpg"); }
+            body {     background-image: url("assets/images/grid.jpg"); }
         </style>
     </head>
     <body>
