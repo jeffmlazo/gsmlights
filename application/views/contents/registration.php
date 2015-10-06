@@ -1,3 +1,4 @@
+<div class="col-lg-4 col-md-4 col-sm-4"></div>
 <div class="col-lg-4 col-md-4 col-sm-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -54,9 +55,13 @@
         </div>
     </div>
 </div>
+<div class="col-lg-4 col-md-4 col-sm-4"></div>
 
 <script>
     $(function() {
+        
+        $('#department').focus();
+        
         $('#add-account').on('submit', function(e) {
             e.preventDefault();
 

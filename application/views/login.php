@@ -31,7 +31,7 @@
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 
         <!--Custom JQuery Libraries-->
-        <script src="<?php echo base_url(); ?>assets/js/jquery.alertDisplay.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.js"></script>
 
         <div class="container" style="margin-top: 20%;">
             <div class="login-wrapper">

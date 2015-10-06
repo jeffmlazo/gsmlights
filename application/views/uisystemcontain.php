@@ -35,14 +35,18 @@
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
 
-        <!--Custom JQuery Libraries-->
-        <script src="<?php echo base_url(); ?>assets/js/jquery.alertDisplay.js"></script>
+        <!--Custom jQuery Libraries-->
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.modal.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.form.js"></script>
+
+        <!--DataTable Custom Javascript-->
+        <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.default.js"></script>
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
             <!--            <li role="presentation" class="active">
-                            <a href="<?php // echo base_url();            ?>uisystemcontain/home" id="home">Home</a>
+                            <a href="<?php // echo base_url();              ?>uisystemcontain/home" id="home">Home</a>
                         </li>-->
             <li role="presentation" class="active">
                 <a href="#" id="registration">Registration</a>
@@ -60,11 +64,15 @@
 
         <div class="container-fluid">
             <div class="row" style="margin-top: 20px;">
+                <!--This is were the pop modals will be populated-->
+                <div id="modal-container"></div>
                 <div id="main-content">
+
                     <?php
                     $data = array($job_title_options, $department_options);
                     $this->load->view('contents/registration', $data);
                     ?>
+
                 </div>
             </div>
         </div>

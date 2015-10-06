@@ -1,6 +1,7 @@
 <?php
 
-if (!defined('BASEPATH')) {
+if (!defined('BASEPATH'))
+{
     exit('No direct script access allowed');
 }
 
@@ -11,10 +12,18 @@ class Account_model extends CI_Model {
      * @param $data the account data
      * @return the insert id
      */
-    public function save($data) {
+    public function save($data)
+    {
         $this->db->set($data);
         $this->db->insert('account');
         return $this->db->insert_id();
+    }
+
+    public function update($data, $id)
+    {
+        $this->db->set($data, $id);
+        $this->db->where('id', $id);
+        $this->db->update('account');
     }
 
     /**
@@ -22,7 +31,8 @@ class Account_model extends CI_Model {
      * @param $id the id of the specific account
      * $return the account
      */
-    public function getAccount($id) {
+    public function getAccount($id)
+    {
         $this->db->where('id', $id);
         return $this->db->get('account')->row();
     }
@@ -31,7 +41,8 @@ class Account_model extends CI_Model {
      * Get all accounts
      * @return all accounts
      */
-    public function getAccounts() {
+    public function getAccounts()
+    {
         return $this->db->get('account');
     }
 
@@ -40,10 +51,12 @@ class Account_model extends CI_Model {
      * @param $username the user's username
      * $return the user
      */
-    public function getUser($username) {
+    public function getUser($username)
+    {
         $this->db->where('username', $username);
         return $this->db->get('user')->row();
     }
+
 }
 
 /* End of file account_model.php */
