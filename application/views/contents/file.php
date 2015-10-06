@@ -54,7 +54,7 @@
                     arr_data[i] = data[i + 1];
                 }
 
-                $.get('<?php echo base_url(); ?>account/view_file', {arr_data: arr_data}, function(response) {
+                $.get('<?php echo base_url(); ?>account/edit_file', {arr_data: arr_data}, function(response) {
                     $.modalDisplay({
                         title: 'Edit File',
                         content: response

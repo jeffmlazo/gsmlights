@@ -138,7 +138,7 @@ class Account extends CI_Controller {
         $this->load->view('contents/file', $data);
     }
 
-    public function view_file()
+    public function edit_file()
     {
         $file_data = $this->input->get('arr_data');
 
@@ -170,7 +170,7 @@ class Account extends CI_Controller {
             $data['job_title_options'] = $job_title_data;
         }
 
-        $this->load->view('contents/view_file', $data);
+        $this->load->view('contents/edit_file', $data);
     }
 
     public function update_file()
