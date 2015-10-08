@@ -42,7 +42,7 @@
             $('#job-title').focus();
         });
 
-        $('.modal-footer, .modal-header').on('click', 'button', function(e) {
+        $('.modal').on('click', 'button', function(e) {
             e.preventDefault();
             var me = $(this);
 
@@ -52,10 +52,11 @@
                     var obj = $.parseJSON(response);
 
                     if(obj.status === 'success') {
-                        $.alertDisplay('#edit-file', obj.msg);
+                        $.alertDisplay('.modal-body', obj.msg);
                         setTimeout(function() {
                             $('.modal').modal('hide');
-                        }, 3000);
+                            $('#reload-table').click();
+                        }, 1000);
                     }
                 });
             }

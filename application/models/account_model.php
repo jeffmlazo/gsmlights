@@ -26,6 +26,12 @@ class Account_model extends CI_Model {
         $this->db->update('account');
     }
 
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('account');
+    }
+
     /**
      * Get the specific account
      * @param $id the id of the specific account

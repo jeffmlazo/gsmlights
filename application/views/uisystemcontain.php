@@ -16,6 +16,9 @@
         <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables_themeroller.css" rel="stylesheet">
 
+        <!--Spinner Loader-->
+        <link href="<?php echo base_url(); ?>assets/css/spinner-loader.css" rel="stylesheet">
+
         <!--Custom Theme-->
         <link href="<?php echo base_url(); ?>assets/css/custom-theme.css" rel="stylesheet">
 
@@ -39,14 +42,13 @@
         <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.modal.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.form.js"></script>
-
-        <!--DataTable Custom Javascript-->
         <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.default.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.loader.js"></script>
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
             <!--            <li role="presentation" class="active">
-                            <a href="<?php // echo base_url();              ?>uisystemcontain/home" id="home">Home</a>
+                            <a href="<?php // echo base_url();                   ?>uisystemcontain/home" id="home">Home</a>
                         </li>-->
             <li role="presentation" class="active">
                 <a href="#" id="registration">Registration</a>
@@ -88,9 +90,11 @@
                     } else {
                         // Adds a class for active in the nav
                         $(this).tab('show');
-                        $.get('<?php echo base_url() ?>uisystemcontain/navs/' + id, function(response) {
-                            $('#main-content').html(response);
-                        });
+                        $.ajaxLoader(
+                                '#main-content',
+                                '<?php echo base_url() ?>uisystemcontain/navs/' + id,
+                                {spinnerSize: 'large', delayTime: 1000}
+                        );
                     }
                 });
             });
