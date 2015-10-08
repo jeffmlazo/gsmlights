@@ -36,12 +36,12 @@ class Account extends CI_Controller {
             }
             else
             {
-                $json_msg = array('status' => 'error', 'msg' => 'Incorrect password');
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_incorrect_password'));
             }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => 'Account is not existing');
+            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_account_not_exist'));
         }
 
         echo json_encode($json_msg);
@@ -73,7 +73,7 @@ class Account extends CI_Controller {
         );
 
         $this->account_model->save($arr_data);
-        $json_msg = array('status' => 'success', 'msg' => 'The account was successfully added.');
+        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_add'));
         echo json_encode($json_msg);
     }
 
@@ -110,8 +110,10 @@ class Account extends CI_Controller {
         $this->load->view('contents/registration', $data);
     }
 
-    public function display_files()
+    public function files()
     {
+        $action = $this->uri->segment(3);
+
         $data['file_results'] = '';
         $query_results = $this->account_model->getAccounts();
         if ($query_results->num_rows() > 0)
@@ -135,11 +137,21 @@ class Account extends CI_Controller {
             $data['json_data'] = json_encode($file_data);
         }
 
-        $this->load->view('contents/file', $data);
+        switch ($action)
+        {
+            case 'display':
+                $this->load->view('contents/file', $data);
+                break;
+
+            case 'reload':
+                $this->load->view('contents/file_table', $data);
+                break;
+        }
     }
 
-    public function edit_file()
+    public function prompt_file()
     {
+        $prompt_type = $this->uri->segment(3);
         $file_data = $this->input->get('arr_data');
 
         $data = array(
@@ -151,26 +163,38 @@ class Account extends CI_Controller {
             'user_id' => $file_data[6]
         );
 
-        $data['job_title_options'] = '';
-        $query_job_titles = $this->job_title_model->getJobTitles();
-        if ($query_job_titles->num_rows() > 0)
+        if ($prompt_type === 'edit')
         {
-            $job_title_data = '';
-            foreach ($query_job_titles->result() as $job_title)
+
+            $data['job_title_options'] = '';
+            $query_job_titles = $this->job_title_model->getJobTitles();
+            if ($query_job_titles->num_rows() > 0)
             {
-                $selected = '';
-                if ($job_title->name === $file_data[5])
+                $job_title_data = '';
+                foreach ($query_job_titles->result() as $job_title)
                 {
-                    $selected = 'selected';
+                    $selected = '';
+                    if ($job_title->name === $file_data[5])
+                    {
+                        $selected = 'selected';
+                    }
+
+                    $job_title_data .= '<option value="' . $job_title->id . '" ' . $selected . '>' . $job_title->name . '</option>';
                 }
 
-                $job_title_data .= '<option value="' . $job_title->id . '" ' . $selected . '>' . $job_title->name . '</option>';
+                $data['job_title_options'] = $job_title_data;
             }
 
-            $data['job_title_options'] = $job_title_data;
+            $this->load->view('contents/edit_file', $data);
         }
-
-        $this->load->view('contents/edit_file', $data);
+        else if ($prompt_type === 'delete')
+        {
+            $this->load->view('contents/delete_file', $data);
+        }
+        else
+        {
+            
+        }
     }
 
     public function update_file()
@@ -193,34 +217,16 @@ class Account extends CI_Controller {
         );
 
         $this->account_model->update($arr_data, $user_id);
-        $json_msg = array('status' => 'success', 'msg' => 'The account was successfully updated.');
+        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_update'));
         echo json_encode($json_msg);
     }
 
-    public function reload_file()
+    public function delete_file()
     {
-        $query_results = $this->account_model->getAccounts();
-        if ($query_results->num_rows() > 0)
-        {
-            $file_data = array();
-            foreach ($query_results->result() as $file)
-            {
-                $query_job_title = $this->job_title_model->getJobTitle($file->job_title_id);
-                $file_data[] = array(
-                    '<input type="checkbox" class="checkbox">',
-                    $file->phone_number,
-                    $file->username,
-                    $file->firstname,
-                    $file->middlename,
-                    $file->lastname,
-                    $query_job_title->name,
-                    $file->id
-                );
-            }
-
-            $json_data = json_encode($file_data);
-            echo $json_data;
-        }
+//        $user_id = $this->input->post('user_id');
+//        $this->account_model->delete($user_id);
+        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_delete'));
+        echo json_encode($json_msg);
     }
 
 }
