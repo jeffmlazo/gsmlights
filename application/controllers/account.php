@@ -160,12 +160,11 @@ class Account extends CI_Controller {
             'firstname' => $file_data[2],
             'middlename' => $file_data[3],
             'lastname' => $file_data[4],
-            'user_id' => $file_data[6]
+            'account_id' => $file_data[6]
         );
 
         if ($prompt_type === 'edit')
         {
-
             $data['job_title_options'] = '';
             $query_job_titles = $this->job_title_model->getJobTitles();
             if ($query_job_titles->num_rows() > 0)
@@ -187,19 +186,40 @@ class Account extends CI_Controller {
 
             $this->load->view('contents/edit_file', $data);
         }
-        else if ($prompt_type === 'delete')
+        else if (strpos($prompt_type, 'delete') !== FALSE)
         {
+            if (strpos($prompt_type, 'all') !== FALSE)
+            {
+                $check_rows = $this->input->get('checked_rows');
+
+                $accounts = '';
+                $account_ids = array();
+                foreach ($check_rows as $row_data)
+                {
+                    $firstname = $row_data[2];
+                    $middlename = $row_data[3];
+                    $lastname = $row_data[4];
+
+                    $account_ids[] = $row_data[6];
+                    $accounts .= '<strong>' . $firstname . ' ' . substr(ucfirst($middlename), 0, 1) . '. ' . $lastname . '<br/></strong>';
+                }
+
+                $data['accounts'] = $accounts;
+                $data['account_ids'] = $account_ids;
+            }
+
+            $data['prompt_type'] = $prompt_type;
             $this->load->view('contents/delete_file', $data);
         }
         else
         {
-            
+            echo $this->lang->line('error_redirect_prompt_file');
         }
     }
 
     public function update_file()
     {
-        $user_id = $this->input->post('user_id');
+        $account_id = $this->input->post('account-id');
         $job_title_id = $this->input->post('job-title');
         $username = $this->input->post('username');
         $phone_number = $this->input->post('phone-number');
@@ -216,16 +236,19 @@ class Account extends CI_Controller {
             'lastname' => $lastname
         );
 
-        $this->account_model->update($arr_data, $user_id);
+        $this->account_model->update($arr_data, $account_id);
         $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_update'));
         echo json_encode($json_msg);
     }
 
     public function delete_file()
     {
-//        $user_id = $this->input->post('user_id');
-//        $this->account_model->delete($user_id);
-        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_delete'));
+//        $action = $this->uri->segment(3);
+        $account_id = $this->input->post('account_id');
+        $this->account_model->delete($account_id);
+        $msg = $this->lang->line('success_account_delete');
+
+        $json_msg = array('status' => 'success', 'msg' => $msg);
         echo json_encode($json_msg);
     }
 

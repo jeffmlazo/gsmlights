@@ -71,6 +71,7 @@
                 if(obj.status === 'success') {
                     $('#add-account').resetForm();
                     $.alertDisplay('#add-account', obj.msg);
+                    $('#department').focus();
                 }
             });
 

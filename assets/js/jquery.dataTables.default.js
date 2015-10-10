@@ -17,11 +17,11 @@
                 "columnDefs": o.columnDefs,
                 "pagingType": "simple_numbers",
                 "info": true,
-                "lengthMenu": [[10, 50, 100, 500, 1000], [10, 50, 100, 500, 1000]],
+                "lengthMenu": [[10, 50, 100, 500, -1], [10, 50, 100, 500, 'All']],
                 "language": {
-                    "lenghtMenu": "Display_MENU_records per page",
+                    "lengthMenu": "Display _MENU_ records per page",
                     "zeroRecords": "Nothing found - sorry",
-                    "info": "showing page _PAGE_ of _PAGES_",
+                    "info": "Showing page _PAGE_ to _PAGES_ of _MAX_ entries",
                     "infoEmpty": "No records available",
                     "infoFiltered": "(filtered from _MAX_ total records)"
                 },

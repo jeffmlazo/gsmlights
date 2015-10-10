@@ -28,7 +28,18 @@ class Account_model extends CI_Model {
 
     public function delete($id)
     {
-        $this->db->where('id', $id);
+        // Check if the id's were array
+        if (is_array($id))
+        {
+            // Delete multiple rows
+            $this->db->where_in('id', $id);
+        }
+        else
+        {
+            // Delete single row
+            $this->db->where('id', $id);
+        }
+
         $this->db->delete('account');
     }
 

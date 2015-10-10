@@ -10,7 +10,6 @@
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet">
 
         <!--DataTables-->
         <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables.min.css" rel="stylesheet">

@@ -5,7 +5,7 @@
             var defaults = {
                 title: 'No title',
                 content: 'No content',
-                modalSize: '', // Default is medium
+                modalSize: '', // Default medium
                 btnClose: true,
                 btnSave: true,
                 btnCustom: false
@@ -16,7 +16,7 @@
 
             // Default modal design
             var modal_content = '<div class="modal fade" tabindex="-1" role="dialog">' +
-                    '<div class="modal-dialog "' + o.modalSize + '>' +
+                    '<div class="modal-dialog ' + o.modalSize + '">' +
                     '<div class="modal-content">' +
                     '<div class="modal-header">' +
                     '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
@@ -32,7 +32,6 @@
                     '</div>';
 
             $('#modal-container').empty().html(modal_content);
-
             if(o.btnClose)
             {
                 $('.modal-footer').prepend('<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">Close</button>');

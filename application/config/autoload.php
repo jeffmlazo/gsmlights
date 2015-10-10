@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('form_validation', 'form_success');
+$autoload['language'] = array('form_validation', 'form_success', 'url_redirection');
 
 
 /*

@@ -31,7 +31,7 @@
         <label for="lastname">Last Name:</label>
         <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $lastname; ?>" required>
     </div>
-    <input type="hidden" class="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>">
+    <input type="hidden" class="hidden" id="account-id" name="account-id" value="<?php echo $account_id; ?>">
 </form>
 
 <script>
