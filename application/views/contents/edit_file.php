@@ -52,12 +52,12 @@
                     var obj = $.parseJSON(response);
 
                     if(obj.status === 'success') {
-                        $.alertDisplay('.modal-body', obj.msg);
                         setTimeout(function() {
                             $('.modal').modal('hide');
                             $('#reload-table').click();
                         }, 1000);
                     }
+                    $.alertDisplay('.modal-body', obj.msg, obj.status);
                 });
             }
             else if(me.hasClass('btn-close') || me.hasClass('close'))

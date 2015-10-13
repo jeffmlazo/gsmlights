@@ -13,6 +13,7 @@ class Account extends CI_Controller {
         $this->load->model('account_model');
         $this->load->model('job_title_model');
         $this->load->model('department_model');
+        $this->load->model('user_model');
     }
 
     public function index()
@@ -25,14 +26,29 @@ class Account extends CI_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        $query_user = $this->account_model->getUser($username);
         $json_msg = array();
+        $query_user = $this->user_model->getUser($username);
         if ($query_user)
         {
-
             if ($query_user->password === $password)
             {
-                $json_msg = array('status' => 'success');
+                // Update the user table for the last_login
+                $data = array('last_login' => TRUE);
+                $affected_row = $this->user_model->update($data, $query_user->id);
+                if ($affected_row > 0)
+                {
+                    $json_msg = array('status' => 'success');
+                    $session_data = array(
+                        'user_id' => $query_user->id,
+                        'user_type' => $query_user->user_type
+                    );
+
+                    $this->session->set_userdata($session_data);
+                }
+                else
+                {
+                    $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+                }
             }
             else
             {
@@ -49,12 +65,13 @@ class Account extends CI_Controller {
 
     public function logout()
     {
+        $this->session->sess_destroy();
         redirect('account');
     }
 
     public function save()
     {
-        $department = $this->input->post('department');
+        $department_id = $this->input->post('department');
         $job_title_id = $this->input->post('job-title');
         $username = $this->input->post('username');
         $phone_number = $this->input->post('phone-number');
@@ -63,7 +80,7 @@ class Account extends CI_Controller {
         $lastname = $this->input->post('lastname');
 
         $arr_data = array(
-            'department' => $department,
+            'department_id' => $department_id,
             'job_title_id' => $job_title_id,
             'username' => $username,
             'phone_number' => $phone_number,
@@ -72,8 +89,23 @@ class Account extends CI_Controller {
             'lastname' => $lastname
         );
 
-        $this->account_model->save($arr_data);
-        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_add'));
+        $entity_id = $this->account_model->save($arr_data);
+        if ($entity_id)
+        {
+            $log_data = array(
+                'entity_id' => $entity_id,
+                'table_name' => 'account',
+                'user_id' => $this->session->userdata('user_id')
+            );
+
+            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_add'));
+            $this->log_model->save($log_data);
+        }
+        else
+        {
+            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('error_db_insert'));
+        }
+
         echo json_encode($json_msg);
     }
 
@@ -236,19 +268,66 @@ class Account extends CI_Controller {
             'lastname' => $lastname
         );
 
-        $this->account_model->update($arr_data, $account_id);
-        $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_update'));
+        $affected_row = $this->account_model->update($arr_data, $account_id);
+        if ($affected_row > 0)
+        {
+            $log_data = array(
+                'entity_id' => $account_id,
+                'table_name' => 'account',
+                'user_id' => $this->session->userdata('user_id'),
+                'action' => 'update'
+            );
+            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_update'));
+            $this->log_model->save($log_data);
+        }
+        else
+        {
+            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+        }
+
         echo json_encode($json_msg);
     }
 
     public function delete_file()
     {
-//        $action = $this->uri->segment(3);
+        $delete_type = $this->uri->segment(3);
         $account_id = $this->input->post('account_id');
-        $this->account_model->delete($account_id);
-        $msg = $this->lang->line('success_account_delete');
+        $affected_row = $this->account_model->delete($account_id);
+        if ($affected_row > 0)
+        {
+            if ($delete_type === 'delete-all')
+            {
+                $log_data = array();
+                foreach ($account_id as $single_entity_id)
+                {
+                    $log_data[] = array(
+                        'entity_id' => $single_entity_id,
+                        'table_name' => 'account',
+                        'user_id' => $this->session->userdata('user_id'),
+                        'info' => 'all',
+                        'created_on' => date('Y-m-d H:i:s', now()),
+                        'action' => 'delete'
+                    );
+                }
+                $this->log_model->save($log_data, TRUE);
+            }
+            else
+            {
+                $log_data = array(
+                    'entity_id' => $account_id,
+                    'table_name' => 'account',
+                    'user_id' => $this->session->userdata('user_id'),
+                    'action' => 'delete'
+                );
+                $this->log_model->save($log_data);
+            }
 
-        $json_msg = array('status' => 'success', 'msg' => $msg);
+            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_delete'));
+        }
+        else
+        {
+            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_delete'));
+        }
         echo json_encode($json_msg);
     }
 

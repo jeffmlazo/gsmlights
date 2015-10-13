@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url', 'date');
 
 
 /*
@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('form_validation', 'form_success', 'url_redirection');
+$autoload['language'] = array('form_validation', 'form_success', 'url_redirection', 'db');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array('form_validation', 'form_success', 'url_redirectio
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('log_model');
 
 
 /* End of file autoload.php */

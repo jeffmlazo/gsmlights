@@ -21,9 +21,10 @@ class Account_model extends CI_Model {
 
     public function update($data, $id)
     {
-        $this->db->set($data, $id);
+        $this->db->set($data);
         $this->db->where('id', $id);
         $this->db->update('account');
+        return $this->db->affected_rows();
     }
 
     public function delete($id)
@@ -41,6 +42,7 @@ class Account_model extends CI_Model {
         }
 
         $this->db->delete('account');
+        return $this->db->affected_rows();
     }
 
     /**
@@ -61,17 +63,6 @@ class Account_model extends CI_Model {
     public function getAccounts()
     {
         return $this->db->get('account');
-    }
-
-    /**
-     * Get the account of the user by username and password.
-     * @param $username the user's username
-     * $return the user
-     */
-    public function getUser($username)
-    {
-        $this->db->where('username', $username);
-        return $this->db->get('user')->row();
     }
 
 }

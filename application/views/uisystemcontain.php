@@ -47,7 +47,7 @@
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
             <!--            <li role="presentation" class="active">
-                            <a href="<?php // echo base_url();                   ?>uisystemcontain/home" id="home">Home</a>
+                            <a href="<?php // echo base_url();                      ?>uisystemcontain/home" id="home">Home</a>
                         </li>-->
             <li role="presentation" class="active">
                 <a href="#" id="registration">Registration</a>
@@ -68,12 +68,10 @@
                 <!--This is were the pop modals will be populated-->
                 <div id="modal-container"></div>
                 <div id="main-content">
-
                     <?php
                     $data = array($job_title_options, $department_options);
                     $this->load->view('contents/registration', $data);
                     ?>
-
                 </div>
             </div>
         </div>
