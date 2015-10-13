@@ -51,6 +51,7 @@ class Uisystemcontain extends CI_Controller {
     {
         $nav_type = $this->uri->segment(3);
 
+        $error_msg = '';
         switch ($nav_type)
         {
             case 'registration':
@@ -61,10 +62,31 @@ class Uisystemcontain extends CI_Controller {
                 redirect('account/files/display');
                 break;
 
-            case 'message':
-                $this->load->view('contents/message');
+            case 'message-create':
+                $error_msg = 'Pinag aramid ti mensahe is under construction';
+                break;
+
+            case 'message-view-list':
+//                $this->load->view('contents/message');
+                $error_msg = 'Pinag kita ti mensahe is under construction';
+                break;
+
+            case 'user-add':
+                redirect('user');
+                break;
+
+            case 'user-view-list':
+                redirect('user/users/display');
                 break;
         }
+
+        echo '<div class="col-lg-2 col-md-2 col-sm-2"></div>' .
+        '<div class="col-lg-8 col-md-8 col-sm-8">' .
+        '<div class="alert alert-danger" role="alert">' .
+        '<strong>Warning!</strong> ' . $error_msg .
+        '</div>' .
+        '</div>' .
+        '<div class="col-lg-2 col-md-2 col-sm-2"></div>';
     }
 
 }

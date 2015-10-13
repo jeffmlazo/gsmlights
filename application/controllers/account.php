@@ -40,6 +40,7 @@ class Account extends CI_Controller {
                     $json_msg = array('status' => 'success');
                     $session_data = array(
                         'user_id' => $query_user->id,
+                        'username' => $query_user->username,
                         'user_type' => $query_user->user_type
                     );
 
@@ -69,6 +70,7 @@ class Account extends CI_Controller {
         redirect('account');
     }
 
+    // TODO: Add form validations before saving
     public function save()
     {
         $department_id = $this->input->post('department');
@@ -98,7 +100,7 @@ class Account extends CI_Controller {
                 'user_id' => $this->session->userdata('user_id')
             );
 
-            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_add'));
+            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'account'));
             $this->log_model->save($log_data);
         }
         else
@@ -139,7 +141,7 @@ class Account extends CI_Controller {
             $data['department_options'] = $department_data;
         }
 
-        $this->load->view('contents/registration', $data);
+        $this->load->view('contents/files/registration', $data);
     }
 
     public function files()
@@ -162,6 +164,7 @@ class Account extends CI_Controller {
                     $file->middlename,
                     $file->lastname,
                     $query_job_title->name,
+                    $file->created_on,
                     $file->id
                 );
             }
@@ -172,11 +175,11 @@ class Account extends CI_Controller {
         switch ($action)
         {
             case 'display':
-                $this->load->view('contents/file', $data);
+                $this->load->view('contents/files/file', $data);
                 break;
 
             case 'reload':
-                $this->load->view('contents/file_table', $data);
+                $this->load->view('contents/files/file_table', $data);
                 break;
         }
     }
@@ -192,7 +195,7 @@ class Account extends CI_Controller {
             'firstname' => $file_data[2],
             'middlename' => $file_data[3],
             'lastname' => $file_data[4],
-            'account_id' => $file_data[6]
+            'account_id' => $file_data[7]
         );
 
         if ($prompt_type === 'edit')
@@ -216,7 +219,7 @@ class Account extends CI_Controller {
                 $data['job_title_options'] = $job_title_data;
             }
 
-            $this->load->view('contents/edit_file', $data);
+            $this->load->view('contents/files/edit_file', $data);
         }
         else if (strpos($prompt_type, 'delete') !== FALSE)
         {
@@ -232,7 +235,7 @@ class Account extends CI_Controller {
                     $middlename = $row_data[3];
                     $lastname = $row_data[4];
 
-                    $account_ids[] = $row_data[6];
+                    $account_ids[] = $row_data[7];
                     $accounts .= '<strong>' . $firstname . ' ' . substr(ucfirst($middlename), 0, 1) . '. ' . $lastname . '<br/></strong>';
                 }
 
@@ -241,11 +244,11 @@ class Account extends CI_Controller {
             }
 
             $data['prompt_type'] = $prompt_type;
-            $this->load->view('contents/delete_file', $data);
+            $this->load->view('contents/files/delete_file', $data);
         }
         else
         {
-            echo $this->lang->line('error_redirect_prompt_file');
+            echo sprintf($this->lang->line('error_redirect_prompt'), 'file');
         }
     }
 
@@ -277,7 +280,7 @@ class Account extends CI_Controller {
                 'user_id' => $this->session->userdata('user_id'),
                 'action' => 'update'
             );
-            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_update'));
+            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'account'));
             $this->log_model->save($log_data);
         }
         else
@@ -317,12 +320,13 @@ class Account extends CI_Controller {
                     'entity_id' => $account_id,
                     'table_name' => 'account',
                     'user_id' => $this->session->userdata('user_id'),
+                    'info' => 'row',
                     'action' => 'delete'
                 );
                 $this->log_model->save($log_data);
             }
 
-            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('success_account_delete'));
+            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_delete'), 'account'));
         }
         else
         {

@@ -46,20 +46,37 @@
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
-            <!--            <li role="presentation" class="active">
-                            <a href="<?php // echo base_url();                      ?>uisystemcontain/home" id="home">Home</a>
-                        </li>-->
             <li role="presentation" class="active">
-                <a href="#" id="registration">Registration</a>
+                <a href="#" id="registration">Registration<span class="sr-only">(active)</span></a>
             </li>
             <li role="presentation">
                 <a href="#" id="file">File</a>
             </li>
-            <li role="presentation">
-                <a href="#" id="message">Message</a>
+            <li role="presentation" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Message
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="message-create">Create</a></li>
+                    <li><a href="#" id="message-view-list">View List</a></li>
+                </ul>
+            </li>
+            <li role="presentation" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    User
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="user-add">Add</a></li>
+                    <li><a href="#" id="user-view-list">View Users</a></li>
+                </ul>
             </li>
             <li role="presentation">
                 <a href="#" id="logout">Logout</a>
+            </li>
+            <li role="presentation" class="navbar-right nav-rigth-elements">
+                <span class="text-info"><strong>Welcome <?php echo ucfirst($this->session->userdata('username')); ?></strong></span>
             </li>
         </ul>
 
@@ -70,7 +87,7 @@
                 <div id="main-content">
                     <?php
                     $data = array($job_title_options, $department_options);
-                    $this->load->view('contents/registration', $data);
+                    $this->load->view('contents/files/registration', $data);
                     ?>
                 </div>
             </div>
@@ -78,13 +95,15 @@
 
         <script>
             $(function() {
-                $('#navs a').on('click', function(e) {
+                $('#navs a, #nav a a').on('click', function(e) {
                     e.preventDefault();
                     var id = $(this).attr('id');
-
+                    console.log(id);
                     if(id === 'logout') {
                         document.location.href = '<?php echo base_url(); ?>account/logout';
-                    } else {
+                    }
+                    else if(typeof id !== 'undefined')
+                    {
                         // Adds a class for active in the nav
                         $(this).tab('show');
                         $.ajaxLoader(

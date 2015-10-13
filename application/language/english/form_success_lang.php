@@ -1,12 +1,11 @@
 <?php
 
-// Registration success
-$lang['success_account_add'] = "The account was successfully added.";
-
-// Update account
-$lang['success_account_update'] = "The account was successfully updated.";
-// Delete account
-$lang['success_account_delete'] = "The account(s) was successfully deleted.";
+// Adding success
+$lang['success_form_add'] = "The %s was successfully added.";
+// Updating success
+$lang['success_form_update'] = "The %s was successfully updated.";
+// Deleting success
+$lang['success_form_delete'] = "The %s(s) was successfully deleted.";
 
 /* End of file form_success_lang.php */
 /* Location: ./system/language/english/form_success_lang.php */

@@ -2,3 +2,13 @@
 .modal-dialog{
     margin-top: 100px !important;
 }
+
+.nav-tabs > li.active > a:hover {
+    cursor: pointer !important;
+}
+
+.nav-rigth-elements {
+    padding: 10px 15px;
+    border: 1px solid transparent;
+    display: block;
+}

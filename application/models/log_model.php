@@ -20,7 +20,6 @@ class Log_model extends CI_Model {
                 $this->db->set('action', 'create');
             }
             $this->db->set('created_on', 'NOW()', FALSE);
-            $this->db->set('info', 'row');
             $this->db->set($data);
             $this->db->insert('log');
         }

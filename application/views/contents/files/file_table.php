@@ -8,6 +8,7 @@
             <th>Middle Name</th>
             <th>Last Name</th>
             <th>Job Title</th>
+            <th>Created On</th>
             <th></th>
         </tr>
     </thead>
