@@ -6,7 +6,6 @@
         </div>
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
-
             <form id="add-message" action="#" autocomplete="false">
 
                 <div class="form-group">
@@ -42,12 +41,10 @@
 
             $.post('<?php echo base_url() ?>message/save', $(this).serialize(), function(response) {
                 var obj = $.parseJSON(response);
-
-                if(obj.status === 'success') {
-                    $('#add-message').resetForm();
-                    $.alertDisplay('#add-message', obj.msg);
-                    $('#priority').focus();
-                }
+                
+                $('#add-message').resetForm();
+                $.alertDisplay('#add-message', obj.msg, obj.status);
+                $('#priority').focus();
             });
 
         });
