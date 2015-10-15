@@ -8,4 +8,4 @@ $lang['success_form_update'] = "The %s was successfully updated.";
 $lang['success_form_delete'] = "The %s(s) was successfully deleted.";
 
 /* End of file form_success_lang.php */
-/* Location: ./system/language/english/form_success_lang.php */
+/* Location: ./application/language/english/form_success_lang.php */

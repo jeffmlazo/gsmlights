@@ -32,7 +32,11 @@
 
                 <div class="form-group">
                     <label for="phone-number">Phone Number:</label>
-                    <input type="text" class="form-control" id="phone-number" name="phone-number" required>
+                    <div class="input-group">
+                        <div class="input-group-addon">+63</div>
+                        <input type="text" class="form-control" id="phone-number" name="phone-number" maxlength="10" required>
+                    </div>
+                    <p class="help-block">Remove "0" at the beginning. Ex. 9086805971</p>
                 </div>
 
                 <div class="form-group">
@@ -59,9 +63,9 @@
 
 <script>
     $(function() {
-        
+
         $('#department').focus();
-        
+
         $('#add-account').on('submit', function(e) {
             e.preventDefault();
 

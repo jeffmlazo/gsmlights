@@ -19,7 +19,7 @@
     $(function() {
 
         var table_options = {
-            orderNum: 1,
+            orderNum: 4,
             columnDefs: [
                 {"bSortable": false, "aTargets": [0, -1]},
                 {"targets": -1, "data": null, "defaultContent": "<button class=\"btn btn-primary edit\">Edit</button>&nbsp;<button class=\"btn btn-primary delete-row\">Delete</button>"}

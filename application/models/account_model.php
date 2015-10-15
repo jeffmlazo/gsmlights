@@ -40,7 +40,7 @@ class Account_model extends CI_Model {
             // Delete single row
             $this->db->where('id', $id);
         }
-
+        
         $this->db->delete('account');
         return $this->db->affected_rows();
     }
@@ -66,10 +66,10 @@ class Account_model extends CI_Model {
          * 2nd parameter SELECT was set to FALSE so that we can use the mysql DATE_FORMAT
          * function and we also rename the column because it is required to call in the controller
          */
-        $this->db->select("account.*, DATE_FORMAT(log.created_on, '%m-%d-%Y') AS created_on", FALSE);
-        $this->db->join('log', 'account.id = log.entity_id', 'left');
+        $this->db->select("account.*, LOWER(DATE_FORMAT(log.created_on, '%m/%d/%Y %h:%i %p')) AS created_on", FALSE);
+        $this->db->join('log', 'log.account_entity_id = account.id', 'left');
         $this->db->where('action', 'create');
-        $this->db->where('table_name', 'user');
+        $this->db->where('table_name', 'account');
         return $this->db->get('account');
     }
 

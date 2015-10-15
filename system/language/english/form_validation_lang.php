@@ -25,9 +25,5 @@ $lang['decimal'] = "The %s field must contain a decimal number.";
 $lang['less_than'] = "The %s field must contain a number less than %s.";
 $lang['greater_than'] = "The %s field must contain a number greater than %s.";
 
-/* Custom validations */
-// Login validation
-$lang['error_account_not_exist'] = "Account is not existing";
-$lang['error_incorrect_password'] = "Incorrect password";
 /* End of file form_validation_lang.php */
 /* Location: ./system/language/english/form_validation_lang.php */

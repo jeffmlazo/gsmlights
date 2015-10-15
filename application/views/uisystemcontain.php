@@ -59,7 +59,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#" id="message-create">Create</a></li>
-                    <li><a href="#" id="message-view-list">View List</a></li>
+                    <li><a href="#" id="message-inbox">Inbox</a></li>
                 </ul>
             </li>
             <li role="presentation" class="dropdown">
@@ -76,20 +76,26 @@
                 <a href="#" id="logout">Logout</a>
             </li>
             <li role="presentation" class="navbar-right nav-rigth-elements">
-                <span class="text-info"><strong>Welcome <?php echo ucfirst($this->session->userdata('username')); ?></strong></span>
+                <span class="text-info">
+                    <strong>Welcome <?php echo ucfirst($this->session->userdata('username')); ?></strong>
+                </span>
             </li>
         </ul>
 
         <div class="container-fluid">
             <div class="row" style="margin-top: 20px;">
+                
                 <!--This is were the pop modals will be populated-->
                 <div id="modal-container"></div>
+                
+                <!--Main content-->
                 <div id="main-content">
                     <?php
                     $data = array($job_title_options, $department_options);
                     $this->load->view('contents/files/registration', $data);
                     ?>
                 </div>
+                
             </div>
         </div>
 

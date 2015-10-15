@@ -78,8 +78,8 @@ class User_model extends CI_Model {
          * 2nd parameter SELECT was set to FALSE so that we can use the mysql DATE_FORMAT
          * function and we also rename the column because it is required to call in the controller
          */
-        $this->db->select("user.*, DATE_FORMAT(log.created_on, '%m-%d-%Y') AS created_on", FALSE);
-        $this->db->join('log', 'user.id = log.entity_id', 'left');
+        $this->db->select("user.*, LOWER(DATE_FORMAT(log.created_on, '%m/%d/%Y %h:%i %p')) AS created_on", FALSE);
+        $this->db->join('log', 'log.user_entity_id = user.id', 'left');
         $this->db->where('action', 'create');
         $this->db->where('table_name', 'user');
         return $this->db->get('user');

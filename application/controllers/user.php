@@ -34,7 +34,7 @@ class User extends CI_Controller {
         if ($entity_id)
         {
             $log_data = array(
-                'entity_id' => $entity_id,
+                'user_entity_id' => $entity_id,
                 'table_name' => 'user',
                 'user_id' => $this->session->userdata('user_id')
             );
@@ -44,7 +44,7 @@ class User extends CI_Controller {
         }
         else
         {
-            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('error_db_insert'));
+            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
         }
 
         echo json_encode($json_msg);
@@ -161,7 +161,7 @@ class User extends CI_Controller {
         if ($affected_row > 0)
         {
             $log_data = array(
-                'entity_id' => $user_id,
+                'user_entity_id' => $user_id,
                 'table_name' => 'user',
                 'user_id' => $this->session->userdata('user_id'),
                 'action' => 'update'
@@ -190,11 +190,11 @@ class User extends CI_Controller {
                 foreach ($user_id as $single_entity_id)
                 {
                     $log_data[] = array(
-                        'entity_id' => $single_entity_id,
+                        'user_entity_id' => $single_entity_id,
                         'table_name' => 'user',
                         'user_id' => $this->session->userdata('user_id'),
                         'info' => 'all',
-                        'created_on' => date('Y-m-d H:i:s', now()),
+                        'created_on' => date('Y-m-d H:i:s'),
                         'action' => 'delete'
                     );
                 }
@@ -203,7 +203,7 @@ class User extends CI_Controller {
             else
             {
                 $log_data = array(
-                    'entity_id' => $user_id,
+                    'user_entity_id' => $user_id,
                     'table_name' => 'user',
                     'user_id' => $this->session->userdata('user_id'),
                     'info' => 'row',

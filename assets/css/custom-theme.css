@@ -12,3 +12,7 @@
     border: 1px solid transparent;
     display: block;
 }
+
+.btn-align-right {
+    text-align: right;
+}

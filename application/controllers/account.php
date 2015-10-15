@@ -85,7 +85,7 @@ class Account extends CI_Controller {
             'department_id' => $department_id,
             'job_title_id' => $job_title_id,
             'username' => $username,
-            'phone_number' => $phone_number,
+            'phone_number' => '+63' . $phone_number,
             'firstname' => $firstname,
             'middlename' => $middlename,
             'lastname' => $lastname
@@ -95,7 +95,7 @@ class Account extends CI_Controller {
         if ($entity_id)
         {
             $log_data = array(
-                'entity_id' => $entity_id,
+                'account_entity_id' => $entity_id,
                 'table_name' => 'account',
                 'user_id' => $this->session->userdata('user_id')
             );
@@ -105,7 +105,7 @@ class Account extends CI_Controller {
         }
         else
         {
-            $json_msg = array('status' => 'success', 'msg' => $this->lang->line('error_db_insert'));
+            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
         }
 
         echo json_encode($json_msg);
@@ -188,9 +188,8 @@ class Account extends CI_Controller {
     {
         $prompt_type = $this->uri->segment(3);
         $file_data = $this->input->get('arr_data');
-
+        
         $data = array(
-            'phone_number' => $file_data[0],
             'username' => $file_data[1],
             'firstname' => $file_data[2],
             'middlename' => $file_data[3],
@@ -200,6 +199,11 @@ class Account extends CI_Controller {
 
         if ($prompt_type === 'edit')
         {
+            $explode_phone_number = explode('+63', $file_data[0]);
+            $phone_number = $explode_phone_number[1];
+            $arr_phone_number = array('phone_number' => $phone_number);
+            $data = array_merge($data, $arr_phone_number);
+            
             $data['job_title_options'] = '';
             $query_job_titles = $this->job_title_model->getJobTitles();
             if ($query_job_titles->num_rows() > 0)
@@ -248,7 +252,7 @@ class Account extends CI_Controller {
         }
         else
         {
-            echo sprintf($this->lang->line('error_redirect_prompt'), 'file');
+            echo sprintf($this->lang->line('error_redirect_prompt'), 'account');
         }
     }
 
@@ -265,7 +269,7 @@ class Account extends CI_Controller {
         $arr_data = array(
             'job_title_id' => $job_title_id,
             'username' => $username,
-            'phone_number' => $phone_number,
+            'phone_number' => '+63' . $phone_number,
             'firstname' => $firstname,
             'middlename' => $middlename,
             'lastname' => $lastname
@@ -275,7 +279,7 @@ class Account extends CI_Controller {
         if ($affected_row > 0)
         {
             $log_data = array(
-                'entity_id' => $account_id,
+                'account_entity_id' => $account_id,
                 'table_name' => 'account',
                 'user_id' => $this->session->userdata('user_id'),
                 'action' => 'update'
@@ -304,11 +308,11 @@ class Account extends CI_Controller {
                 foreach ($account_id as $single_entity_id)
                 {
                     $log_data[] = array(
-                        'entity_id' => $single_entity_id,
+                        'account_entity_id' => $single_entity_id,
                         'table_name' => 'account',
                         'user_id' => $this->session->userdata('user_id'),
                         'info' => 'all',
-                        'created_on' => date('Y-m-d H:i:s', now()),
+                        'created_on' => date('Y-m-d H:i:s'),
                         'action' => 'delete'
                     );
                 }
@@ -317,7 +321,7 @@ class Account extends CI_Controller {
             else
             {
                 $log_data = array(
-                    'entity_id' => $account_id,
+                    'account_entity_id' => $account_id,
                     'table_name' => 'account',
                     'user_id' => $this->session->userdata('user_id'),
                     'info' => 'row',

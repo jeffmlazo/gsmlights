@@ -13,7 +13,7 @@
 
             var tableData = $(target).DataTable({
                 "scrollX": true,
-                "order": [[o.orderNum, "asc"]],
+                "order": [[o.orderNum, "dsc"]],
                 "columnDefs": o.columnDefs,
                 "pagingType": "simple_numbers",
                 "info": true,

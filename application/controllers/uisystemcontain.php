@@ -63,12 +63,11 @@ class Uisystemcontain extends CI_Controller {
                 break;
 
             case 'message-create':
-                $error_msg = 'Pinag aramid ti mensahe is under construction';
+                redirect('message');
                 break;
 
-            case 'message-view-list':
-//                $this->load->view('contents/message');
-                $error_msg = 'Pinag kita ti mensahe is under construction';
+            case 'message-inbox':
+                redirect('message/messages/display');
                 break;
 
             case 'user-add':
