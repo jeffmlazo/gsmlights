@@ -18,33 +18,72 @@ class User extends CI_Controller {
         $this->load->view('contents/users/registration');
     }
 
+    // JX-TODO: Add call back function username check for form validations
     public function save()
     {
-        $user_type = $this->input->post('user-type');
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['user_validation']);
 
-        $arr_data = array(
-            'user_type' => $user_type,
-            'username' => $username,
-            'password' => $password
-        );
-
-        $entity_id = $this->user_model->save($arr_data);
-        if ($entity_id)
+        if ($this->form_validation->run())
         {
-            $log_data = array(
-                'user_entity_id' => $entity_id,
-                'table_name' => 'user',
-                'user_id' => $this->session->userdata('user_id')
+            $user_type = $this->input->post('user-type');
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+
+            $arr_data = array(
+                'user_type' => $user_type,
+                'username' => $username,
+                'password' => $password
             );
 
-            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'user'));
-            $this->log_model->save($log_data);
+            $entity_id = $this->user_model->save($arr_data);
+            if ($entity_id)
+            {
+                $log_data = array(
+                    'user_entity_id' => $entity_id,
+                    'table_name' => 'user',
+                    'user_id' => $this->session->userdata('user_id')
+                );
+
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'user'));
+                $this->log_model->save($log_data);
+            }
+            else
+            {
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
+            }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
         }
 
         echo json_encode($json_msg);
@@ -144,34 +183,73 @@ class User extends CI_Controller {
         }
     }
 
+    // JX-TODO: Add call back function username check for form validations
     public function update_user()
     {
-        $user_id = $this->input->post('user-id');
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $user_type = $this->input->post('user-type');
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['user_validation']);
 
-        $arr_data = array(
-            'username' => $username,
-            'password' => $password,
-            'user_type' => $user_type
-        );
-
-        $affected_row = $this->user_model->update($arr_data, $user_id);
-        if ($affected_row > 0)
+        if ($this->form_validation->run())
         {
-            $log_data = array(
-                'user_entity_id' => $user_id,
-                'table_name' => 'user',
-                'user_id' => $this->session->userdata('user_id'),
-                'action' => 'update'
+            $user_id = $this->input->post('user-id');
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            $user_type = $this->input->post('user-type');
+
+            $arr_data = array(
+                'username' => $username,
+                'password' => $password,
+                'user_type' => $user_type
             );
-            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'user'));
-            $this->log_model->save($log_data);
+
+            $affected_row = $this->user_model->update($arr_data, $user_id);
+            if ($affected_row > 0)
+            {
+                $log_data = array(
+                    'user_entity_id' => $user_id,
+                    'table_name' => 'user',
+                    'user_id' => $this->session->userdata('user_id'),
+                    'action' => 'update'
+                );
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'user'));
+                $this->log_model->save($log_data);
+            }
+            else
+            {
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+            }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
         }
 
         echo json_encode($json_msg);

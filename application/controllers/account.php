@@ -70,42 +70,80 @@ class Account extends CI_Controller {
         redirect('account');
     }
 
-    // TODO: Add form validations before saving
+    // JX-TODO: Add call back function username check for form validations
     public function save()
     {
-        $department_id = $this->input->post('department');
-        $job_title_id = $this->input->post('job-title');
-        $username = $this->input->post('username');
-        $phone_number = $this->input->post('phone-number');
-        $firstname = $this->input->post('firstname');
-        $middlename = $this->input->post('middlename');
-        $lastname = $this->input->post('lastname');
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['file_validation']);
 
-        $arr_data = array(
-            'department_id' => $department_id,
-            'job_title_id' => $job_title_id,
-            'username' => $username,
-            'phone_number' => '+63' . $phone_number,
-            'firstname' => $firstname,
-            'middlename' => $middlename,
-            'lastname' => $lastname
-        );
-
-        $entity_id = $this->account_model->save($arr_data);
-        if ($entity_id)
+        if ($this->form_validation->run())
         {
-            $log_data = array(
-                'account_entity_id' => $entity_id,
-                'table_name' => 'account',
-                'user_id' => $this->session->userdata('user_id')
+            $department_id = $this->input->post('department');
+            $job_title_id = $this->input->post('job-title');
+            $username = $this->input->post('username');
+            $phone_number = $this->input->post('phone-number');
+            $firstname = $this->input->post('firstname');
+            $middlename = $this->input->post('middlename');
+            $lastname = $this->input->post('lastname');
+
+            $arr_data = array(
+                'department_id' => $department_id,
+                'job_title_id' => $job_title_id,
+                'username' => $username,
+                'phone_number' => '+63' . $phone_number,
+                'firstname' => $firstname,
+                'middlename' => $middlename,
+                'lastname' => $lastname
             );
 
-            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'account'));
-            $this->log_model->save($log_data);
+            $entity_id = $this->account_model->save($arr_data);
+            if ($entity_id)
+            {
+                $log_data = array(
+                    'account_entity_id' => $entity_id,
+                    'table_name' => 'account',
+                    'user_id' => $this->session->userdata('user_id')
+                );
+
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'account'));
+                $this->log_model->save($log_data);
+            }
+            else
+            {
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
+            }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_insert'));
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
         }
 
         echo json_encode($json_msg);
@@ -188,7 +226,7 @@ class Account extends CI_Controller {
     {
         $prompt_type = $this->uri->segment(3);
         $file_data = $this->input->get('arr_data');
-        
+
         $data = array(
             'username' => $file_data[1],
             'firstname' => $file_data[2],
@@ -203,7 +241,7 @@ class Account extends CI_Controller {
             $phone_number = $explode_phone_number[1];
             $arr_phone_number = array('phone_number' => $phone_number);
             $data = array_merge($data, $arr_phone_number);
-            
+
             $data['job_title_options'] = '';
             $query_job_titles = $this->job_title_model->getJobTitles();
             if ($query_job_titles->num_rows() > 0)
@@ -256,40 +294,79 @@ class Account extends CI_Controller {
         }
     }
 
+    // JX-TODO: Add call back function username check for form validations
     public function update_file()
     {
-        $account_id = $this->input->post('account-id');
-        $job_title_id = $this->input->post('job-title');
-        $username = $this->input->post('username');
-        $phone_number = $this->input->post('phone-number');
-        $firstname = $this->input->post('firstname');
-        $middlename = $this->input->post('middlename');
-        $lastname = $this->input->post('lastname');
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['file_validation']);
 
-        $arr_data = array(
-            'job_title_id' => $job_title_id,
-            'username' => $username,
-            'phone_number' => '+63' . $phone_number,
-            'firstname' => $firstname,
-            'middlename' => $middlename,
-            'lastname' => $lastname
-        );
-
-        $affected_row = $this->account_model->update($arr_data, $account_id);
-        if ($affected_row > 0)
+        if ($this->form_validation->run())
         {
-            $log_data = array(
-                'account_entity_id' => $account_id,
-                'table_name' => 'account',
-                'user_id' => $this->session->userdata('user_id'),
-                'action' => 'update'
+            $account_id = $this->input->post('account-id');
+            $job_title_id = $this->input->post('job-title');
+            $username = $this->input->post('username');
+            $phone_number = $this->input->post('phone-number');
+            $firstname = $this->input->post('firstname');
+            $middlename = $this->input->post('middlename');
+            $lastname = $this->input->post('lastname');
+
+            $arr_data = array(
+                'job_title_id' => $job_title_id,
+                'username' => $username,
+                'phone_number' => '+63' . $phone_number,
+                'firstname' => $firstname,
+                'middlename' => $middlename,
+                'lastname' => $lastname
             );
-            $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'account'));
-            $this->log_model->save($log_data);
+
+            $affected_row = $this->account_model->update($arr_data, $account_id);
+            if ($affected_row > 0)
+            {
+                $log_data = array(
+                    'account_entity_id' => $account_id,
+                    'table_name' => 'account',
+                    'user_id' => $this->session->userdata('user_id'),
+                    'action' => 'update'
+                );
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'account'));
+                $this->log_model->save($log_data);
+            }
+            else
+            {
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+            }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
         }
 
         echo json_encode($json_msg);

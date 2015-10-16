@@ -1,6 +1,7 @@
 <table id="file-list" class="display">
     <thead>
         <tr>
+            <?php // JX-TODO: Add here the Department column ?>
             <th><input type="checkbox" class="checkbox" id="check-all"></th>
             <th>Phone Number</th>
             <th>Username</th>

@@ -7,6 +7,7 @@
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
             <form id="add-user" action="#" autocomplete="false">
+                <?php // JX-TODO: Remove user type drop down box in user registration ?> 
                 <div class="form-group">
                     <label for="user-type">User Type:</label>
                     <select class="form-control" id="user-type" name="user-type" required>
@@ -46,9 +47,9 @@
 
                 if(obj.status === 'success') {
                     $('#add-user').resetForm();
-                    $.alertDisplay('#add-user', obj.msg);
                     $('#user-type').focus();
                 }
+                $.alertDisplay('#add-user', obj.msg, obj.status);
             });
 
         });

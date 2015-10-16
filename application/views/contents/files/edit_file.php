@@ -1,4 +1,5 @@
 <form id="edit-file" action="#" autocomplete="false">
+    <?php // JX-TODO: Add here the Department field ?>
     <div class="form-group">
         <label for="job-title">Job Title:</label>
         <select class="form-control" id="job-title" name="job-title" required>

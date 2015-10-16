@@ -6,7 +6,7 @@
         </div>
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
-
+            <?php echo form_error('username'); ?>
             <form id="add-account" action="#" autocomplete="false">
 
                 <div class="form-group">
@@ -74,9 +74,10 @@
 
                 if(obj.status === 'success') {
                     $('#add-account').resetForm();
-                    $.alertDisplay('#add-account', obj.msg);
                     $('#department').focus();
                 }
+                
+                $.alertDisplay('#add-account', obj.msg, obj.status);
             });
 
         });
