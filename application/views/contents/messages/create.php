@@ -6,7 +6,7 @@
         </div>
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
-            <form id="add-message" action="#" autocomplete="false">
+            <form id="create-message" action="#" autocomplete="false">
 
                 <div class="form-group">
                     <label for="priority">Priority:</label>
@@ -36,15 +36,19 @@
 
         $('#priority').focus();
 
-        $('#add-message').on('submit', function(e) {
+        $('#create-message').on('submit', function(e) {
             e.preventDefault();
 
             $.post('<?php echo base_url() ?>message/save', $(this).serialize(), function(response) {
                 var obj = $.parseJSON(response);
-                
-                $('#add-message').resetForm();
-                $.alertDisplay('#add-message', obj.msg, obj.status);
-                $('#priority').focus();
+
+                if(obj.status === 'success')
+                {
+                    $('#create-message').resetForm();
+                    $('#priority').focus();
+                }
+
+                $.alertDisplay('#create-message', obj.msg, obj.status);
             });
 
         });

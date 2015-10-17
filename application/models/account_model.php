@@ -66,8 +66,10 @@ class Account_model extends CI_Model {
          * 2nd parameter SELECT was set to FALSE so that we can use the mysql DATE_FORMAT
          * function and we also rename the column because it is required to call in the controller
          */
-        $this->db->select("account.*, LOWER(DATE_FORMAT(log.created_on, '%m/%d/%Y %h:%i %p')) AS created_on", FALSE);
+        $this->db->select("account.*, LOWER(DATE_FORMAT(log.created_on, '%m/%d/%Y %h:%i %p')) AS created_on, job_title.name AS job_title_name, department.name AS department_name", FALSE);
         $this->db->join('log', 'log.account_entity_id = account.id', 'left');
+        $this->db->join('job_title', 'job_title.id = account.job_title_id', 'left');
+        $this->db->join('department', 'department.id = account.department_id', 'left');
         $this->db->where('action', 'create');
         $this->db->where('table_name', 'account');
         return $this->db->get('account');

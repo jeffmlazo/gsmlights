@@ -70,7 +70,7 @@ class Account extends CI_Controller {
         redirect('account');
     }
 
-    // JX-TODO: Add call back function username check for form validations
+    // JX-TODO: Add call back function username, department, job title check for form validations
     public function save()
     {
         $config = $this->config->item('form_validations');
@@ -193,7 +193,6 @@ class Account extends CI_Controller {
             $file_data = array();
             foreach ($query_results->result() as $file)
             {
-                $query_job_title = $this->job_title_model->getJobTitle($file->job_title_id);
                 $file_data[] = array(
                     '<input type="checkbox" class="checkbox">',
                     $file->phone_number,
@@ -201,7 +200,8 @@ class Account extends CI_Controller {
                     $file->firstname,
                     $file->middlename,
                     $file->lastname,
-                    $query_job_title->name,
+                    $file->job_title_name,
+                    $file->department_name,
                     $file->created_on,
                     $file->id
                 );
@@ -232,7 +232,7 @@ class Account extends CI_Controller {
             'firstname' => $file_data[2],
             'middlename' => $file_data[3],
             'lastname' => $file_data[4],
-            'account_id' => $file_data[7]
+            'account_id' => $file_data[8]
         );
 
         if ($prompt_type === 'edit')
@@ -241,6 +241,25 @@ class Account extends CI_Controller {
             $phone_number = $explode_phone_number[1];
             $arr_phone_number = array('phone_number' => $phone_number);
             $data = array_merge($data, $arr_phone_number);
+
+            $data['department_options'] = '';
+            $query_departments = $this->department_model->getDepartments();
+            if ($query_departments->num_rows() > 0)
+            {
+                $department_data = '';
+                foreach ($query_departments->result() as $department)
+                {
+                    $selected = '';
+                    if ($department->name === $file_data[6])
+                    {
+                        $selected = 'selected';
+                    }
+
+                    $department_data .= '<option value="' . $department->id . '"' . $selected . '>' . $department->name . '</option>';
+                }
+
+                $data['department_options'] = $department_data;
+            }
 
             $data['job_title_options'] = '';
             $query_job_titles = $this->job_title_model->getJobTitles();
@@ -277,7 +296,7 @@ class Account extends CI_Controller {
                     $middlename = $row_data[3];
                     $lastname = $row_data[4];
 
-                    $account_ids[] = $row_data[7];
+                    $account_ids[] = $row_data[8];
                     $accounts .= '<strong>' . $firstname . ' ' . substr(ucfirst($middlename), 0, 1) . '. ' . $lastname . '<br/></strong>';
                 }
 
@@ -294,7 +313,7 @@ class Account extends CI_Controller {
         }
     }
 
-    // JX-TODO: Add call back function username check for form validations
+    // JX-TODO: Add call back function username, department, job title check for form validations
     public function update_file()
     {
         $config = $this->config->item('form_validations');
@@ -304,6 +323,7 @@ class Account extends CI_Controller {
         {
             $account_id = $this->input->post('account-id');
             $job_title_id = $this->input->post('job-title');
+            $department_id = $this->input->post('department');
             $username = $this->input->post('username');
             $phone_number = $this->input->post('phone-number');
             $firstname = $this->input->post('firstname');
@@ -312,6 +332,7 @@ class Account extends CI_Controller {
 
             $arr_data = array(
                 'job_title_id' => $job_title_id,
+                'department_id' => $department_id,
                 'username' => $username,
                 'phone_number' => '+63' . $phone_number,
                 'firstname' => $firstname,

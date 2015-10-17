@@ -9,6 +9,7 @@
             <th>Middle Name</th>
             <th>Last Name</th>
             <th>Job Title</th>
+            <th>Department</th>
             <th>Created On</th>
             <th></th>
         </tr>
@@ -23,7 +24,7 @@
     $(function() {
 
         var table_options = {
-            orderNum: 7,
+            orderNum: 8,
             columnDefs: [
                 {"bSortable": false, "aTargets": [0, -1]},
                 {"targets": -1, "data": null, "defaultContent": "<button class=\"btn btn-primary edit\">Edit</button>&nbsp;<button class=\"btn btn-primary delete-row\">Delete</button>"}

@@ -18,7 +18,7 @@ class User extends CI_Controller {
         $this->load->view('contents/users/registration');
     }
 
-    // JX-TODO: Add call back function username check for form validations
+    // JX-TODO: Add call back function username, department, job title check for form validations
     public function save()
     {
         $config = $this->config->item('form_validations');
@@ -26,12 +26,10 @@ class User extends CI_Controller {
 
         if ($this->form_validation->run())
         {
-            $user_type = $this->input->post('user-type');
             $username = $this->input->post('username');
             $password = $this->input->post('password');
 
             $arr_data = array(
-                'user_type' => $user_type,
                 'username' => $username,
                 'password' => $password
             );
@@ -183,7 +181,7 @@ class User extends CI_Controller {
         }
     }
 
-    // JX-TODO: Add call back function username check for form validations
+    // JX-TODO: Add call back function username, department, job title check for form validations
     public function update_user()
     {
         $config = $this->config->item('form_validations');

@@ -1,11 +1,11 @@
 <?php
 
 // Login validation
-$lang['error_account_not_exist'] = "Account is not existing";
-$lang['error_incorrect_password'] = "Incorrect password";
+$lang['error_account_not_exist'] = "Account is not existing.";
+$lang['error_incorrect_password'] = "Incorrect password.";
 
 // Message validation
-$lang['error_phone_number_not_exist'] = "No phone number found";
+$lang['error_phone_number_not_exist'] = "No phone number to be send to.";
 
 // Field names
 $lang['department'] = "Department";

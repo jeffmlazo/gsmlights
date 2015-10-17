@@ -1,5 +1,13 @@
 <form id="edit-file" action="#" autocomplete="false">
-    <?php // JX-TODO: Add here the Department field ?>
+
+    <div class="form-group">
+        <label for="department">Department:</label>
+        <select class="form-control" id="department" name="department" required>
+            <option value="">Select Department</option>
+            <?php echo $department_options; ?>
+        </select>
+    </div>
+
     <div class="form-group">
         <label for="job-title">Job Title:</label>
         <select class="form-control" id="job-title" name="job-title" required>
@@ -44,7 +52,7 @@
 
         // If the modal showed set the auto focus to the top most first field
         $('.modal').on('shown.bs.modal', function() {
-            $('#job-title').focus();
+            $('#department').focus();
         });
 
         $('.modal').on('click', 'button', function(e) {

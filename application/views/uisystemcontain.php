@@ -46,13 +46,28 @@
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
-            <li role="presentation" class="active">
-                <a href="#" id="registration">Registration<span class="sr-only">(active)</span></a>
-            </li>
-            <li role="presentation">
-                <a href="#" id="file">File</a>
-            </li>
-            <li role="presentation" class="dropdown">
+            <?php
+            // Set default for admin navigations
+            $is_admin = TRUE;
+            $active_nav = '';
+            if ($this->session->userData('user_type') === 'employee')
+            {
+                // FALSE means that the user was an employee
+                $is_admin = FALSE;
+                $active_nav = 'active';
+            }
+            ?>
+
+            <?php if ($is_admin): ?>
+                <li role="presentation" class="active">
+                    <a href="#" id="registration">Registration<span class="sr-only">(active)</span></a>
+                </li>
+                <li role="presentation">
+                    <a href="#" id="file">File</a>
+                </li>
+            <?php endif; ?>
+
+            <li role="presentation" class="dropdown <?php echo $active_nav; ?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Message
                     <span class="caret"></span>
@@ -62,16 +77,19 @@
                     <li><a href="#" id="message-inbox">Inbox</a></li>
                 </ul>
             </li>
-            <li role="presentation" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    User
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" id="user-add">Add</a></li>
-                    <li><a href="#" id="user-view-list">View Users</a></li>
-                </ul>
-            </li>
+
+            <?php if ($is_admin): ?>
+                <li role="presentation" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        User
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="user-add">Add</a></li>
+                        <li><a href="#" id="user-view-list">View Users</a></li>
+                    </ul>
+                </li>
+            <?php endif; ?>
             <li role="presentation">
                 <a href="#" id="logout">Logout</a>
             </li>
@@ -84,10 +102,10 @@
 
         <div class="container-fluid">
             <div class="row" style="margin-top: 20px;">
-                
+
                 <!--This is were the pop modals will be populated-->
                 <div id="modal-container"></div>
-                
+
                 <!--Main content-->
                 <div id="main-content">
                     <?php
@@ -95,7 +113,7 @@
                     $this->load->view('contents/files/registration', $data);
                     ?>
                 </div>
-                
+
             </div>
         </div>
 

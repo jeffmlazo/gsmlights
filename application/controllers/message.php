@@ -15,7 +15,7 @@ class Message extends CI_Controller {
 
     public function index()
     {
-        $this->load->view('contents/messages/registration');
+        $this->load->view('contents/messages/create');
     }
 
     public function save()
