@@ -55,7 +55,7 @@ $config['form_validations'] = array(
         array(
             'field' => 'password',
             'label' => 'lang:password',
-            'rules' => 'trim|required|min_length[6]|max_length[20]'
+            'rules' => 'trim|required|min_length[6]|max_length[255]'
         ),
         array(
             'field' => 'confirm-password',

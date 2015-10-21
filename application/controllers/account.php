@@ -30,7 +30,8 @@ class Account extends CI_Controller {
         $query_user = $this->user_model->getUser($username);
         if ($query_user)
         {
-            if ($query_user->password === $password)
+            // Check password hash with the feeded password in the form
+            if (password_verify($password, $query_user->password))
             {
                 // Update the user table for the last_login
                 $data = array('last_login' => TRUE);

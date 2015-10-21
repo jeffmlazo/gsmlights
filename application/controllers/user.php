@@ -20,17 +20,19 @@ class User extends CI_Controller {
 
     public function save()
     {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
         $config = $this->config->item('form_validations');
         $this->form_validation->set_rules($config['user_validation']);
 
         if ($this->form_validation->run())
         {
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
+            // Password hash for secure password
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
             $arr_data = array(
                 'username' => $username,
-                'password' => $password
+                'password' => $password_hash
             );
 
             $entity_id = $this->user_model->save($arr_data);
