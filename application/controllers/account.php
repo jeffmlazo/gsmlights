@@ -18,6 +18,12 @@ class Account extends CI_Controller {
 
     public function index()
     {
+        // user is already logged in
+        if ($this->auth->loggedin())
+        {
+            redirect('uisystemcontain');
+        }
+
         $this->load->view('login');
     }
 
@@ -25,41 +31,88 @@ class Account extends CI_Controller {
     {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
+        $remember = $this->input->post('remember') ? TRUE : FALSE;
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['login_validation']);
 
-        $json_msg = array();
-        $query_user = $this->user_model->getUser($username);
-        if ($query_user)
+        if ($this->form_validation->run())
         {
-            // Check password hash with the feeded password in the form
-            if (password_verify($password, $query_user->password))
+            $json_msg = array();
+            $query_user = $this->user_model->getUser($username);
+            if ($query_user)
             {
-                // Update the user table for the last_login
-                $data = array('last_login' => TRUE);
-                $affected_row = $this->user_model->update($data, $query_user->id);
-                if ($affected_row > 0)
+                // Check password hash with the feeded password in the form
+                if (password_verify($password, $query_user->password))
                 {
-                    $json_msg = array('status' => 'success');
-                    $session_data = array(
-                        'user_id' => $query_user->id,
-                        'username' => $query_user->username,
-                        'user_type' => $query_user->user_type
-                    );
+                    // Update the user table for the last_login
+                    $data = array('last_login' => TRUE);
+                    $affected_row = $this->user_model->update($data, $query_user->id);
+                    if ($affected_row > 0)
+                    {
+                        $json_msg = array('status' => 'success');
+                        $session_data = array(
+                            'user_id' => $query_user->id,
+                            'username' => $query_user->username,
+                            'user_type' => $query_user->user_type
+                        );
 
-                    $this->session->set_userdata($session_data);
+                        if ($remember)
+                        {
+                            $this->auth->login($query_user->id);
+                        }
+                        else
+                        {
+                            $this->auth->login($query_user->id, FALSE);
+                        }
+
+                        $this->session->set_userdata($session_data);
+                    }
+                    else
+                    {
+                        $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+                    }
                 }
                 else
                 {
-                    $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+                    $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_incorrect_password'));
                 }
             }
             else
             {
-                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_incorrect_password'));
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_account_not_exist'));
             }
         }
         else
         {
-            $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_account_not_exist'));
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
         }
 
         echo json_encode($json_msg);
@@ -68,6 +121,7 @@ class Account extends CI_Controller {
     public function logout()
     {
         $this->session->sess_destroy();
+        $this->auth->logout();
         redirect('account');
     }
 

@@ -37,11 +37,18 @@
                 <div style="width:320px;" class="well center-block">
                     <h1 style="color: #C14545;" class="text-center">Welcome to BOARD</h1>
                     <form id="login" action="#" class="form-signin">
-                        <input type="text" class="form-control" placeholder="Username" name="username" required autofocus> <br>
-                        <input type="password" class="form-control" placeholder="Password" name="password" required> <br>
-                        <!--                        <label>
-                                                    <input type="checkbox"> Keep me logged in
-                                                </label>-->
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="remember" id="remember" value="1"> 
+                                    Keep me logged in
+                                </label>
+                            </div>
+                        </div>
                         <input type="submit" class="btn btn-lg btn-primary btn-block btn-sm" value="LOGIN">
                     </form>
                 </div>

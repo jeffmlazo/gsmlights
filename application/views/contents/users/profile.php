@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-group">
-        <label for="phone-number">New Password:</label>
+        <label for="password">New Password:</label>
         <input type="password" class="form-control" id="password" name="password" required>
         <div class="checkbox">
             <label>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="form-group">
-        <label for="phone-number">Confirm New Password:</label>
+        <label for="confirm-password">Confirm New Password:</label>
         <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
         <div class="checkbox">
             <label>

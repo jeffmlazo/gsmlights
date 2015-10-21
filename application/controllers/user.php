@@ -15,6 +15,15 @@ class User extends CI_Controller {
 
     public function index()
     {
+        /**
+         * Check if user was not logged in if true redirect
+         * to the login page
+         */
+        if (!$this->auth->loggedin())
+        {
+            redirect('account');
+        }
+
         $this->load->view('contents/users/registration');
     }
 

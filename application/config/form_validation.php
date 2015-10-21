@@ -7,6 +7,18 @@ if (!defined('BASEPATH'))
  * These will be the global form validation rules for all controllers
  */
 $config['form_validations'] = array(
+    'login_validation' => array(
+        array(
+            'field' => 'username',
+            'label' => 'lang:username',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'password',
+            'label' => 'lang:password',
+            'rules' => 'trim|required'
+        )
+    ),
     // These validation are for add and edit account/file
     'file_validation' => array(
         array(

@@ -1,7 +1,9 @@
 <?php
 
 if (!defined('BASEPATH'))
+{
     exit('No direct script access allowed');
+}
 
 class Uisystemcontain extends CI_Controller {
 
@@ -14,6 +16,15 @@ class Uisystemcontain extends CI_Controller {
 
     public function index()
     {
+        /**
+         * Check if user was not logged in if true redirect
+         * to the login page
+         */
+        if (!$this->auth->loggedin())
+        {
+            redirect('account');
+        }
+
         $data['job_title_options'] = '';
         $query_job_titles = $this->job_title_model->getJobTitles();
         if ($query_job_titles->num_rows() > 0)
