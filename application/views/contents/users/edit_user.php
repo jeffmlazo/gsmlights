@@ -14,7 +14,24 @@
 
     <div class="form-group">
         <label for="phone-number">Password:</label>
-        <input type="text" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+        <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="" id="checkbox-password">
+                Show password
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="phone-number">Confirm Password:</label>
+        <input type="password" class="form-control" id="confirm-password" name="confirm-password" value="<?php echo $password; ?>" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="" id="checkbox-confirm-password">
+                Show confirm password
+            </label>
+        </div>
     </div>
     <input type="hidden" class="hidden" id="user-id" name="user-id" value="<?php echo $user_id; ?>">
 </form>
@@ -51,6 +68,19 @@
                 $('.modal').on('hidden.bs.modal', function() {
                     $('#modal-container').empty();
                 });
+            }
+        });
+
+        $('#checkbox-password, #checkbox-confirm-password').on('click', function() {
+            var me = $(this);
+            // Check if the currrent state of the checkbox
+            if(me.is(':checked'))
+            {
+                me.parents('.form-group').find('input:password').prop('type', 'text');
+            }
+            else
+            {
+                me.parents('.form-group').find('input:text').prop('type', 'password');
             }
         });
     });

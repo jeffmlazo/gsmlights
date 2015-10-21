@@ -70,7 +70,6 @@ class Account extends CI_Controller {
         redirect('account');
     }
 
-    // JX-TODO: Add call back function username, department, job title check for form validations
     public function save()
     {
         $config = $this->config->item('form_validations');
@@ -313,7 +312,6 @@ class Account extends CI_Controller {
         }
     }
 
-    // JX-TODO: Add call back function username, department, job title check for form validations
     public function update_file()
     {
         $config = $this->config->item('form_validations');
@@ -435,6 +433,21 @@ class Account extends CI_Controller {
             $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_delete'));
         }
         echo json_encode($json_msg);
+    }
+
+    public function username_check($username)
+    {
+        $query_result = $this->account_model->getAccountUsername($username);
+        // Check if their was already an existing username
+        if ($query_result)
+        {
+            $this->form_validation->set_message('username_check', $this->lang->line('error_username_duplicate'));
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
     }
 
 }

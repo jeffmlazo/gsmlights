@@ -12,12 +12,12 @@ $config['form_validations'] = array(
         array(
             'field' => 'department',
             'label' => 'lang:department',
-            'rules' => 'callback_department_check'
+            'rules' => 'trim|required'
         ),
         array(
             'field' => 'job-title',
             'label' => 'lang:job_title',
-            'rules' => 'callback_job_title_check'
+            'rules' => 'trim|required'
         ),
         array(
             'field' => 'username',
@@ -56,6 +56,11 @@ $config['form_validations'] = array(
             'field' => 'password',
             'label' => 'lang:password',
             'rules' => 'trim|required|min_length[6]|max_length[20]'
+        ),
+        array(
+            'field' => 'confirm-password',
+            'label' => 'lang:confirm_password',
+            'rules' => 'trim|required|matches[password]'
         )
     )
 );

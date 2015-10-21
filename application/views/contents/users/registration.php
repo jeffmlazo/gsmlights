@@ -17,6 +17,11 @@
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                </div>
 
                 <input type="submit" value="SAVE" class="btn btn-primary" style="display:block; margin: 0 auto;">
             </form>

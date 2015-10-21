@@ -40,7 +40,7 @@ class Account_model extends CI_Model {
             // Delete single row
             $this->db->where('id', $id);
         }
-        
+
         $this->db->delete('account');
         return $this->db->affected_rows();
     }
@@ -73,6 +73,12 @@ class Account_model extends CI_Model {
         $this->db->where('action', 'create');
         $this->db->where('table_name', 'account');
         return $this->db->get('account');
+    }
+
+    public function getAccountUsername($username)
+    {
+        $this->db->where('username', $username);
+        return $this->db->get('account')->row();
     }
 
 }

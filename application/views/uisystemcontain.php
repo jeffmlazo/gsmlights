@@ -122,7 +122,6 @@
                 $('#navs a, #nav a a').on('click', function(e) {
                     e.preventDefault();
                     var id = $(this).attr('id');
-                    console.log(id);
                     if(id === 'logout') {
                         document.location.href = '<?php echo base_url(); ?>account/logout';
                     }

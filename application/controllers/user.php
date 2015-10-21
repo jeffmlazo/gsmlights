@@ -18,7 +18,6 @@ class User extends CI_Controller {
         $this->load->view('contents/users/registration');
     }
 
-    // JX-TODO: Add call back function username, department, job title check for form validations
     public function save()
     {
         $config = $this->config->item('form_validations');
@@ -181,7 +180,6 @@ class User extends CI_Controller {
         }
     }
 
-    // JX-TODO: Add call back function username, department, job title check for form validations
     public function update_user()
     {
         $config = $this->config->item('form_validations');
@@ -295,6 +293,33 @@ class User extends CI_Controller {
             $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_delete'));
         }
         echo json_encode($json_msg);
+    }
+
+    public function username_check($username)
+    {
+        $user_id = $this->input->post('user-id');
+        $query_result = $this->user_model->getUser($username);
+        if ($query_result)
+        {
+            // Lets check if the id was still the same
+            if ($user_id === $query_result->id)
+            {
+                /**
+                 * Lets just return TRUE if the user id was still the same
+                 * this means that the username was still the same as well
+                 */
+                return TRUE;
+            }
+            else
+            {
+                $this->form_validation->set_message('username_check', $this->lang->line('error_username_duplicate'));
+                return FALSE;
+            }
+        }
+        else
+        {
+            return TRUE;
+        }
     }
 
 }
