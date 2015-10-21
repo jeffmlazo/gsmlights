@@ -31,7 +31,7 @@
     </head>
     <body>
         <!--jQuery (necessary for Bootstrap's JavaScript plugins)-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
         <!--Include all compiled plugins (below), or include individual files as needed-->
         <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
@@ -95,7 +95,7 @@
             </li>
             <li role="presentation" class="navbar-right nav-rigth-elements">
                 <span class="text-info">
-                    <strong>Welcome <?php echo ucfirst($this->session->userdata('username')); ?></strong>
+                    <strong>Welcome <a href="#" id="profile"><?php echo ucfirst($this->session->userdata('username')); ?></a></strong>
                 </span>
             </li>
         </ul>
@@ -127,13 +127,25 @@
                     }
                     else if(typeof id !== 'undefined')
                     {
-                        // Adds a class for active in the nav
-                        $(this).tab('show');
-                        $.ajaxLoader(
-                                '#main-content',
-                                '<?php echo base_url() ?>uisystemcontain/navs/' + id,
-                                {spinnerSize: 'large', delayTime: 1000}
-                        );
+                        if(id === 'profile')
+                        {
+                            $.get('<?php echo base_url(); ?>user/prompt_profile', {user_id: '<?php echo $this->session->userdata('user_id'); ?>'}, function(response) {
+                                $.modalDisplay({
+                                    title: 'User Profile',
+                                    content: response
+                                });
+                            });
+                        }
+                        else
+                        {
+                            // Adds a class for active in the nav
+                            $(this).tab('show');
+                            $.ajaxLoader(
+                                    '#main-content',
+                                    '<?php echo base_url() ?>uisystemcontain/navs/' + id,
+                                    {spinnerSize: 'large', delayTime: 1000}
+                            );
+                        }
                     }
                 });
             });

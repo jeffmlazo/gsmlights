@@ -45,13 +45,26 @@ $config['form_validations'] = array(
             'rules' => 'trim|required|min_length[2]|alpha'
         )
     ),
-    // These validation are for add and edit user
-    'user_validation' => array(
+    // These validation are for add user
+    'add_user_validation' => array(
         array(
             'field' => 'username',
             'label' => 'lang:username',
             'rules' => 'trim|required|min_length[5]|max_length[20]|callback_username_check'
         ),
+        array(
+            'field' => 'password',
+            'label' => 'lang:password',
+            'rules' => 'trim|required|min_length[6]|max_length[255]'
+        ),
+        array(
+            'field' => 'confirm-password',
+            'label' => 'lang:confirm_password',
+            'rules' => 'trim|required|matches[password]'
+        )
+    ),
+    // These validation are for update user
+    'update_user_validation' => array(
         array(
             'field' => 'password',
             'label' => 'lang:password',

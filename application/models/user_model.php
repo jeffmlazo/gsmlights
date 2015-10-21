@@ -59,12 +59,19 @@ class User_model extends CI_Model {
 
     /**
      * Get the user by username
-     * @param $username the user's username
+     * @param $data the user's username or the id
      * $return the user
      */
-    public function getUser($username)
+    public function getUser($data)
     {
-        $this->db->where('username', $username);
+        if (is_numeric($data))
+        {
+            $this->db->where('id', $data);
+        }
+        else
+        {
+            $this->db->where('username', $data);
+        }
         return $this->db->get('user')->row();
     }
 

@@ -1,20 +1,12 @@
 <form id="edit-user" action="#" autocomplete="false">
     <div class="form-group">
-        <label for="user-type">User Type:</label>
-        <select class="form-control" id="user-type" name="user-type" required>
-            <option value="">Select User Type</option>
-            <?php echo $user_type_options; ?>
-        </select>
-    </div>
-
-    <div class="form-group">
         <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" required>
+        <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" disabled="disabled">
     </div>
 
     <div class="form-group">
-        <label for="phone-number">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+        <label for="phone-number">New Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="" id="checkbox-password">
@@ -24,8 +16,8 @@
     </div>
 
     <div class="form-group">
-        <label for="phone-number">Confirm Password:</label>
-        <input type="password" class="form-control" id="confirm-password" name="confirm-password" value="<?php echo $password; ?>" required>
+        <label for="phone-number">Confirm New Password:</label>
+        <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="" id="checkbox-confirm-password">
@@ -39,9 +31,9 @@
 <script>
     $(function() {
 
-        // If the modal showed set the auto focus to the top most first field
+        // If the modal showed set the auto focus to password field
         $('.modal').on('shown.bs.modal', function() {
-            $('#job-title').focus();
+            $('#password').focus();
         });
 
         $('.modal').on('click', 'button', function(e) {
@@ -53,13 +45,12 @@
                 $.post('<?php echo base_url() ?>user/update_user', $('#edit-user').serialize(), function(response) {
                     var obj = $.parseJSON(response);
 
+                    $.alertDisplay('.modal-body', obj.msg, obj.status);
                     if(obj.status === 'success') {
                         setTimeout(function() {
                             $('.modal').modal('hide');
-                            $('#reload-table').click();
                         }, 1000);
                     }
-                    $.alertDisplay('.modal-body', obj.msg, obj.status);
                 });
             }
             else if(me.hasClass('btn-close') || me.hasClass('close'))

@@ -23,7 +23,7 @@ class User extends CI_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $config = $this->config->item('form_validations');
-        $this->form_validation->set_rules($config['user_validation']);
+        $this->form_validation->set_rules($config['add_user_validation']);
 
         if ($this->form_validation->run())
         {
@@ -164,20 +164,19 @@ class User extends CI_Controller {
 
     public function update_user()
     {
+        $user_id = $this->input->post('user-id');
+        $password = $this->input->post('password');
+
         $config = $this->config->item('form_validations');
-        $this->form_validation->set_rules($config['user_validation']);
+        $this->form_validation->set_rules($config['update_user_validation']);
 
         if ($this->form_validation->run())
         {
-            $user_id = $this->input->post('user-id');
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            $user_type = $this->input->post('user-type');
+            // Password hash for secure password
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
             $arr_data = array(
-                'username' => $username,
-                'password' => $password,
-                'user_type' => $user_type
+                'password' => $password_hash,
             );
 
             $affected_row = $this->user_model->update($arr_data, $user_id);
@@ -189,7 +188,7 @@ class User extends CI_Controller {
                     'user_id' => $this->session->userdata('user_id'),
                     'action' => 'update'
                 );
-                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'user'));
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'profile'));
                 $this->log_model->save($log_data);
             }
             else
@@ -277,6 +276,21 @@ class User extends CI_Controller {
         echo json_encode($json_msg);
     }
 
+    public function prompt_profile()
+    {
+        $user_id = $this->input->get('user_id');
+        $query_row = $this->user_model->getUser($user_id);
+        $data['user_id'] = $query_row->id;
+        $data['username'] = $query_row->username;
+
+        $this->load->view('contents/users/profile', $data);
+    }
+
+    /**
+     * Callback function for add_user_validation
+     * @param string $username
+     * @return boolean
+     */
     public function username_check($username)
     {
         $user_id = $this->input->post('user-id');
