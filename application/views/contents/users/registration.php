@@ -16,11 +16,23 @@
                 <div class="form-group">
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" id="checkbox-password">
+                            Show password
+                        </label>
+                    </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="confirm-password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" id="checkbox-confirm-password">
+                            Show confirm password
+                        </label>
+                    </div>
                 </div>
 
                 <input type="submit" value="SAVE" class="btn btn-primary" style="display:block; margin: 0 auto;">
@@ -48,6 +60,19 @@
                 $.alertDisplay('#add-user', obj.msg, obj.status);
             });
 
+        });
+
+        $('#checkbox-password, #checkbox-confirm-password').on('click', function() {
+            var me = $(this);
+            // Check if the currrent state of the checkbox
+            if(me.is(':checked'))
+            {
+                me.parents('.form-group').find('input:password').prop('type', 'text');
+            }
+            else
+            {
+                me.parents('.form-group').find('input:text').prop('type', 'password');
+            }
         });
     });
 </script>

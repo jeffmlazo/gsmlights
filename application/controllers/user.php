@@ -102,7 +102,6 @@ class User extends CI_Controller {
                 $user_data[] = array(
                     '<input type="checkbox" class="checkbox">',
                     $user->username,
-                    $user->password,
                     $user->user_type,
                     $user->created_on,
                     $user->id
@@ -131,30 +130,11 @@ class User extends CI_Controller {
 
         $data = array(
             'username' => $user_data[0],
-            'password' => $user_data[1],
-            'user_type' => $user_data[2],
-            'user_id' => $user_data[4]
+            'user_type' => $user_data[1],
+            'user_id' => $user_data[3]
         );
 
-        if ($prompt_type === 'edit')
-        {
-            $user_type_options = '';
-            if ($user_data[2] === 'admin')
-            {
-                $user_type_options .= '<option value="admin" selected>Admin</option>' .
-                        '<option value="employee">Employee</option>';
-            }
-            else
-            {
-                $user_type_options .= '<option value="admin">Admin</option>' .
-                        '<option value="employee" selected>Employee</option>';
-            }
-
-            $data['user_type_options'] = $user_type_options;
-
-            $this->load->view('contents/users/edit_user', $data);
-        }
-        else if (strpos($prompt_type, 'delete') !== FALSE)
+        if (strpos($prompt_type, 'delete') !== FALSE)
         {
             if (strpos($prompt_type, 'all') !== FALSE)
             {
@@ -165,7 +145,7 @@ class User extends CI_Controller {
                 foreach ($check_rows as $row_data)
                 {
                     $username = $row_data[0];
-                    $user_ids[] = $row_data[4];
+                    $user_ids[] = $row_data[3];
                     $users .= '<strong>' . $username . '<br/></strong>';
                 }
 

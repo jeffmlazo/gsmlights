@@ -3,7 +3,6 @@
         <tr>
             <th><input type="checkbox" class="checkbox" id="check-all"></th>
             <th>Username</th>
-            <th>Password</th>
             <th>User Type</th>
             <th>Created On</th>
             <th></th>
@@ -19,11 +18,10 @@
     $(function() {
 
         var table_options = {
-            orderNum: 4,
+            orderNum: 3,
             columnDefs: [
                 {"bSortable": false, "aTargets": [0, -1]},
-                {"targets": -1, "data": null, "defaultContent": "<button class=\"btn btn-primary edit\">Edit</button>&nbsp;<button class=\"btn btn-primary delete-row\">Delete</button>"},
-                {"visible": false, "targets": [2]}
+                {"targets": -1, "data": null, "defaultContent": "<button class=\"btn btn-primary delete-row\">Delete</button>"},
             ]
         };
 
@@ -44,7 +42,7 @@
                 arr_data[i] = data[i];
             }
 
-            if(me.hasClass('edit') || me.hasClass('delete-row'))
+            if(me.hasClass('delete-row'))
             {
                 var action = 'edit';
                 if(me.hasClass('delete-row'))
@@ -65,14 +63,6 @@
                             btnCustomClass: 'delete-row'
                         });
                     }
-                    else
-                    {
-                        $.modalDisplay({
-                            title: 'Edit User',
-                            content: response
-                        });
-                    }
-
                 });
             }
         });
