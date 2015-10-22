@@ -60,38 +60,70 @@
 
             <?php if ($is_admin): ?>
                 <li role="presentation" class="active">
-                    <a href="#" id="registration">Registration<span class="sr-only">(active)</span></a>
+                    <a href="#" id="registration">
+                        <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                        Registration
+                        <span class="sr-only">(active)</span>
+                    </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" id="file">File</a>
+                    <a href="#" id="file">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        File
+                    </a>
                 </li>
             <?php endif; ?>
 
             <li role="presentation" class="dropdown <?php echo $active_nav; ?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                     Message
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" id="message-create">Create</a></li>
-                    <li><a href="#" id="message-inbox">Inbox</a></li>
+                    <li>
+                        <a href="#" id="message-create">
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                            Create
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="message-inbox">
+                            <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                            Inbox
+                        </a>
+                    </li>
                 </ul>
             </li>
 
             <?php if ($is_admin): ?>
                 <li role="presentation" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         User
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" id="user-add">Add</a></li>
-                        <li><a href="#" id="user-view-list">View Users</a></li>
+                        <li>
+                            <a href="#" id="user-add">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                Add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="user-view-list">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                View Users
+                            </a>
+                        </li>
                     </ul>
                 </li>
             <?php endif; ?>
             <li role="presentation">
-                <a href="#" id="logout">Logout</a>
+                <a href="#" id="logout">
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                    Logout
+                </a>
             </li>
             <li role="presentation" class="navbar-right nav-rigth-elements">
                 <span class="text-info">
@@ -131,6 +163,7 @@
                         {
                             $.get('<?php echo base_url(); ?>user/prompt_profile', {user_id: '<?php echo $this->session->userdata('user_id'); ?>'}, function(response) {
                                 $.modalDisplay({
+                                    titleIcon: 'wrench',
                                     title: 'User Profile',
                                     content: response
                                 });

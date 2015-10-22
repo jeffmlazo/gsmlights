@@ -7,7 +7,7 @@
             // Default options for success
             var defaults = {
                 status: 'success',
-                icon: 'ok',
+                icon: 'thumbs-up',
                 text: 'Success'
             };
 
@@ -16,7 +16,7 @@
             if(status === 'error') {
                 options = {
                     status: 'danger',
-                    icon: 'remove',
+                    icon: 'alert',
                     text: 'Error'
                 };
             }

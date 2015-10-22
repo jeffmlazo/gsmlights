@@ -20,7 +20,10 @@
                     '<div class="modal-content">' +
                     '<div class="modal-header">' +
                     '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                    '<h4 class="modal-title">' + o.title + '</h4>' +
+                    '<h4 class="modal-title">' +
+                    '<span class="glyphicon glyphicon-' + o.titleIcon + '" aria-hidden="true" style="padding-right: 2px;"></span>' +
+                    o.title +
+                    '</h4>' +
                     '</div>' +
                     '<div class="modal-body">' +
                     o.content +
@@ -32,19 +35,37 @@
                     '</div>';
 
             $('#modal-container').empty().html(modal_content);
+            // If true add the close button in the modal
             if(o.btnClose)
             {
-                $('.modal-footer').prepend('<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">Close</button>');
+                $('.modal-footer').prepend(
+                        '<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">' +
+                        '<span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="padding-right: 2px;"></span>' +
+                        'Close' +
+                        '</button>'
+                        );
             }
 
+            // If true add the save button in the modal
             if(o.btnSave)
             {
-                $('.modal-footer').append('<button type="button" class="btn btn-primary btn-save">Save</button>');
+                $('.modal-footer').append(
+                        '<button type="button" class="btn btn-primary btn-save">' +
+                        '<span class="glyphicon glyphicon-save" aria-hidden="true" style="padding-right: 2px;"></span>' +
+                        'Save' +
+                        '</button>'
+                        );
             }
 
+            // If true add the custom button in the modal
             if(o.btnCustom)
             {
-                $('.modal-footer').append('<button type="button" class="btn btn-primary ' + o.btnCustomClass + '">' + o.btnCustomText + '</button>');
+                $('.modal-footer').append(
+                        '<button type="button" class="btn btn-primary ' + o.btnCustomClass + '">' +
+                        '<span class="glyphicon glyphicon-' + o.btnCustomIcon + '" aria-hidden="true" style="padding-right: 2px;"></span>' +
+                        o.btnCustomText +
+                        '</button>'
+                        );
             }
 
             $('.modal').modal('show');

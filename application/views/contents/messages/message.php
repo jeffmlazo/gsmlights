@@ -2,7 +2,10 @@
 <div class="col-lg-8 col-md-8 col-sm-8">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">List of Message</h3>
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                List of Message
+            </h3>
         </div>
 
         <div class="panel-body" style="padding: 10px;">

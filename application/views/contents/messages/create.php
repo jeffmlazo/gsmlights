@@ -2,7 +2,10 @@
 <div class="col-lg-4 col-md-4 col-sm-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Create Message</h3>
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                Create Message
+            </h3>
         </div>
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
@@ -23,7 +26,11 @@
                 </div>
 
                 <div class="btn-align-right">
-                    <input type="submit" value="POST" class="btn btn-primary">
+                    <label for="post" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-share" aria-hidden="true"></i>
+                        POST
+                    </label>
+                    <input id="post" type="submit" value="POST" class="hidden">
                 </div>
             </form>
         </div>

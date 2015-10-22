@@ -21,7 +21,17 @@
             orderNum: 3,
             columnDefs: [
                 {"bSortable": false, "aTargets": [0, -1]},
-                {"targets": -1, "data": null, "defaultContent": "<button class=\"btn btn-primary delete-row\">Delete</button>"},
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent":
+                            "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">" +
+                            "<button class=\"btn btn-primary delete-row\">" +
+                            "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>" +
+                            "Delete" +
+                            "</button>" +
+                            "</div>"
+                }
             ]
         };
 
@@ -55,10 +65,12 @@
                     if(action === 'delete-row')
                     {
                         $.modalDisplay({
+                            titleIcon: 'trash',
                             title: 'Delete User',
                             content: response,
                             btnSave: false,
                             btnCustom: true,
+                            btnCustomIcon: 'trash',
                             btnCustomText: 'Delete',
                             btnCustomClass: 'delete-row'
                         });

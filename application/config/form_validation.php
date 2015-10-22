@@ -44,17 +44,17 @@ $config['form_validations'] = array(
         array(
             'field' => 'firstname',
             'label' => 'lang:firstname',
-            'rules' => 'trim|required|min_length[2]|alpha'
+            'rules' => 'trim|required|min_length[2]|alpha_space'
         ),
         array(
             'field' => 'middlename',
             'label' => 'lang:middlename',
-            'rules' => 'trim|required|min_length[2]|alpha'
+            'rules' => 'trim|required|min_length[2]|alpha_space'
         ),
         array(
             'field' => 'lastname',
             'label' => 'lang:lastname',
-            'rules' => 'trim|required|min_length[2]|alpha'
+            'rules' => 'trim|required|min_length[2]|alpha_space'
         )
     ),
     // These validation are for add user

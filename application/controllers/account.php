@@ -369,20 +369,19 @@ class Account extends CI_Controller {
 
     public function update_file()
     {
+        $account_id = $this->input->post('account-id');
+        $job_title_id = $this->input->post('job-title');
+        $department_id = $this->input->post('department');
+        $username = $this->input->post('username');
+        $phone_number = $this->input->post('phone-number');
+        $firstname = $this->input->post('firstname');
+        $middlename = $this->input->post('middlename');
+        $lastname = $this->input->post('lastname');
         $config = $this->config->item('form_validations');
         $this->form_validation->set_rules($config['file_validation']);
 
         if ($this->form_validation->run())
         {
-            $account_id = $this->input->post('account-id');
-            $job_title_id = $this->input->post('job-title');
-            $department_id = $this->input->post('department');
-            $username = $this->input->post('username');
-            $phone_number = $this->input->post('phone-number');
-            $firstname = $this->input->post('firstname');
-            $middlename = $this->input->post('middlename');
-            $lastname = $this->input->post('lastname');
-
             $arr_data = array(
                 'job_title_id' => $job_title_id,
                 'department_id' => $department_id,
@@ -490,14 +489,32 @@ class Account extends CI_Controller {
         echo json_encode($json_msg);
     }
 
+    /**
+     * Callback function for user_validation
+     * @param string $username
+     * @return boolean
+     */
     public function username_check($username)
     {
+        $account_id = $this->input->post('account-id');
         $query_result = $this->account_model->getAccountUsername($username);
         // Check if their was already an existing username
         if ($query_result)
         {
-            $this->form_validation->set_message('username_check', $this->lang->line('error_username_duplicate'));
-            return FALSE;
+            // Lets check if the id was still the same
+            if ($account_id === $query_result->id)
+            {
+                /**
+                 * Lets just return TRUE if the user id was still the same
+                 * this means that the username was still the same as well
+                 */
+                return TRUE;
+            }
+            else
+            {
+                $this->form_validation->set_message('username_check', $this->lang->line('error_username_duplicate'));
+                return FALSE;
+            }
         }
         else
         {

@@ -2,14 +2,23 @@
 <div class="col-lg-8 col-md-8 col-sm-8">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">List of User</h3>
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                List of User
+            </h3>
         </div>
 
         <div class="panel-body" style="padding: 10px;">
             <div class="btn-container" style="border-bottom: 1px solid #E5E5E5; margin-bottom: 15px; padding-bottom: 15px;">
                 <div class="btn-group" role="group" aria-label="...">
-                    <button class="btn btn-primary" id="reload-table">Refresh</button>
-                    <button class="btn btn-primary" id="delete-all">Delete</button>
+                    <button class="btn btn-primary" id="reload-table">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        Refresh
+                    </button>
+                    <button class="btn btn-primary" id="delete-all">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        Delete
+                    </button>
                 </div>
             </div>
             <div id="user-list-container">
@@ -56,10 +65,12 @@
             {
                 $.get('<?php echo base_url(); ?>user/prompt_user/delete_all', {checked_rows: arr_row_data}, function(response) {
                     $.modalDisplay({
+                        titleIcon: 'trash',
                         title: 'Delete User(s)',
                         content: response,
                         btnSave: false,
                         btnCustom: true,
+                        btnCustomIcon: 'trash',
                         btnCustomText: 'Delete',
                         btnCustomClass: 'delete-all'
                     });
@@ -75,6 +86,7 @@
                         '</div>';
 
                 $.modalDisplay({
+                    titleIcon: 'trash',
                     title: 'Delete User(s)',
                     content: msg,
                     btnSave: false

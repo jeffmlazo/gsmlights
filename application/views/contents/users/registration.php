@@ -2,7 +2,10 @@
 <div class="col-lg-4 col-md-4 col-sm-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Add User</h3>
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Add User
+            </h3>
         </div>
 
         <div class="panel-body" style="padding-left: 25px; padding-right: 25px;">
@@ -35,7 +38,13 @@
                     </div>
                 </div>
 
-                <input type="submit" value="SAVE" class="btn btn-primary" style="display:block; margin: 0 auto;">
+                <div class="btn-align-right">
+                    <label for="save" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-save" aria-hidden="true"></i>
+                        SAVE
+                    </label>
+                    <input id="save" type="submit" value="SAVE" class="hidden">
+                </div>
             </form>
         </div>
     </div>
