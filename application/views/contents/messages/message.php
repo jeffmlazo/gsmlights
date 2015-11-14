@@ -1,5 +1,5 @@
-<div class="col-lg-2 col-md-2 col-sm-2"></div>
-<div class="col-lg-8 col-md-8 col-sm-8">
+<div class="col-lg-1 col-md-1 col-sm-1"></div>
+<div class="col-lg-10 col-md-10 col-sm-10">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<div class="col-lg-2 col-md-2 col-sm-2"></div>
+<div class="col-lg-1 col-md-1 col-sm-1"></div>
