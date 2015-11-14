@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter Message" style="resize: none;" required></textarea>
+                    <label for="message">Message: <input type="text" class="form-control" id="message-ctr" value="100" name="message-ctr" readonly="readonly" style="display: inline !important; width: 50px !important; background-color: #fff !important; text-align: center !important;"></label>
+                    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter Message" style="resize: none;" minlength="3" maxlength="100" required></textarea>
                 </div>
 
                 <div class="btn-align-right">
@@ -43,6 +43,9 @@
 
         $('#priority').focus();
 
+        // Set the initial message ctr value
+        var init_message_ctr = $('#message-ctr').val();
+
         $('#create-message').on('submit', function(e) {
             e.preventDefault();
 
@@ -56,8 +59,32 @@
                 }
 
                 $.alertDisplay('#create-message', obj.msg, obj.status);
+
+                // Reset the default character value
+                $('#message-ctr').attr('value', init_message_ctr);
             });
 
+        });
+
+        // Keyboard event for creating message after keyup triggered
+        $('#create-message').on('keyup', '#message', function() {
+            // Get the current value and length of the entered message and store it to the current_message_ctr variable
+            var current_message_ctr = $(this).val().length;
+            var new_message_ctr = 0;
+            if(init_message_ctr > current_message_ctr)
+            {
+                new_message_ctr = init_message_ctr - current_message_ctr;
+            }
+            else if(init_message_ctr < current_message_ctr)
+            {
+                new_message_ctr = init_message_ctr + current_message_ctr;
+            }
+            else
+            {
+                new_message_ctr = 0;
+            }
+
+            $('#message-ctr').attr('value', new_message_ctr);
         });
     });
 </script>

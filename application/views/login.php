@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LOGIN</title>
+        <title>GSMLights Login</title>
 
         <!-- Bootstrap -->
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -35,20 +35,30 @@
         <div class="container" style="margin-top: 20%;">
             <div class="login-wrapper">
                 <div style="width:320px;" class="well center-block">
-                    <h1 style="color: #C14545;" class="text-center">Welcome to BOARD</h1>
+                    <h1 style="color: #C14545;" class="text-center">GSMLights</h1>
                     <form id="login" action="#" class="form-signin">
+
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" name="password" required>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" id="remember" value="1"> 
-                                    Keep me logged in
-                                </label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="remember" id="remember" value="1"> 
+                                Keep me logged in
+                            </label>
+                        </div>
+
                         <input type="submit" class="btn btn-lg btn-primary btn-block btn-sm" value="LOGIN">
                     </form>
                 </div>
@@ -63,9 +73,12 @@
                     $.post('<?php echo base_url() ?>account/check_user', $(this).serialize(), function(response) {
                         var obj = $.parseJSON(response);
 
-                        if(obj.status === 'success') {
+                        if(obj.status === 'success')
+                        {
                             document.location.href = '<?php echo base_url() ?>uisystemcontain';
-                        } else {
+                        }
+                        else
+                        {
                             $.alertDisplay('#login', obj.msg, obj.status);
                         }
                     });

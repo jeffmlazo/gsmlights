@@ -87,6 +87,14 @@ $config['form_validations'] = array(
             'label' => 'lang:confirm_password',
             'rules' => 'trim|required|matches[password]'
         )
+    ),
+    // These validation are for save message
+    'save_message_validation' => array(
+        array(
+            'field' => 'message',
+            'label' => 'lang:message',
+            'rules' => 'trim|required|min_length[3]'
+        )
     )
 );
 

@@ -19,7 +19,9 @@
     $(function() {
 
         var table_options = {
-            orderNum: 5 
+            orderNum: 5,
+            // Center the 1st and 2nd column cell velues
+            columnDefs: [{className: "dt-body-center", "targets": [0, 1]}]
         };
 
         $.tableDisplay('#message-list', <?php echo (isset($json_data) && !empty($json_data) ? $json_data : 'null'); ?>, table_options);
