@@ -141,8 +141,15 @@
                 <!--Main content-->
                 <div id="main-content">
                     <?php
-                    $data = array($job_title_options, $department_options);
-                    $this->load->view('contents/files/registration', $data);
+                    if ($is_admin)
+                    {
+                        $data = array($job_title_options, $department_options);
+                        $this->load->view('contents/files/registration', $data);
+                    }
+                    else
+                    {
+                        $this->load->view('contents/messages/create');
+                    }
                     ?>
                 </div>
 
@@ -154,7 +161,8 @@
                 $('#navs a, #nav a a').on('click', function(e) {
                     e.preventDefault();
                     var id = $(this).attr('id');
-                    if(id === 'logout') {
+                    if(id === 'logout')
+                    {
                         document.location.href = '<?php echo base_url(); ?>account/logout';
                     }
                     else if(typeof id !== 'undefined')
