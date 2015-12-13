@@ -51,7 +51,8 @@
             $('#file-list tbody input:checked').each(function(index) {
                 var me = $(this);
                 var data = $('#file-list').DataTable().row(me.parents('tr')).data();
-                if(data[0].indexOf('checkbox') > 0)
+
+                if(data[0] !== null && data[0].indexOf('checkbox') > 0)
                 {
                     // Removes the checkbox element in the 0 index array
                     data.shift();

@@ -13,7 +13,6 @@ class Account extends CI_Controller {
         $this->load->model('account_model');
         $this->load->model('job_title_model');
         $this->load->model('department_model');
-        $this->load->model('user_model');
     }
 
     public function index()
@@ -38,7 +37,7 @@ class Account extends CI_Controller {
         if ($this->form_validation->run())
         {
             $json_msg = array();
-            $query_user = $this->user_model->getUser($username);
+            $query_user = $this->account_model->getAccount($username);
             if ($query_user)
             {
                 // Check password hash with the feeded password in the form
@@ -46,14 +45,14 @@ class Account extends CI_Controller {
                 {
                     // Update the user table for the last_login
                     $data = array('last_login' => TRUE);
-                    $affected_row = $this->user_model->update($data, $query_user->id);
+                    $affected_row = $this->account_model->update($data, $query_user->id);
                     if ($affected_row > 0)
                     {
                         $json_msg = array('status' => 'success');
                         $session_data = array(
-                            'user_id' => $query_user->id,
+                            'account_id' => $query_user->id,
                             'username' => $query_user->username,
-                            'user_type' => $query_user->user_type
+                            'account_type' => $query_user->account_type
                         );
 
                         if ($remember)
@@ -128,7 +127,7 @@ class Account extends CI_Controller {
     public function save()
     {
         $config = $this->config->item('form_validations');
-        $this->form_validation->set_rules($config['file_validation']);
+        $this->form_validation->set_rules($config['add_file_validation']);
 
         if ($this->form_validation->run())
         {
@@ -139,24 +138,37 @@ class Account extends CI_Controller {
             $firstname = $this->input->post('firstname');
             $middlename = $this->input->post('middlename');
             $lastname = $this->input->post('lastname');
+            $password = $this->input->post('password');
+
+            // Password hash for secure password
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            if (empty($phone_number))
+            {
+                $phone_number = NULL;
+            }
+            else
+            {
+                $phone_number = '+63' . $phone_number;
+            }
 
             $arr_data = array(
                 'department_id' => $department_id,
                 'job_title_id' => $job_title_id,
                 'username' => $username,
-                'phone_number' => '+63' . $phone_number,
+                'phone_number' => $phone_number,
                 'firstname' => $firstname,
                 'middlename' => $middlename,
-                'lastname' => $lastname
+                'lastname' => $lastname,
+                'password' => $password_hash
             );
 
             $entity_id = $this->account_model->save($arr_data);
             if ($entity_id)
             {
                 $log_data = array(
-                    'account_entity_id' => $entity_id,
+                    'account_id' => $entity_id,
                     'table_name' => 'account',
-                    'user_id' => $this->session->userdata('user_id')
                 );
 
                 $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_add'), 'account'));
@@ -247,9 +259,17 @@ class Account extends CI_Controller {
             $file_data = array();
             foreach ($query_results->result() as $file)
             {
+                // Check if the account type is admin if true skip the admin to display
+                if ($file->account_type === 'admin')
+                {
+                    continue;
+                }
+
+                $phone_number = !empty($file->phone_number) ? $file->phone_number : 'n/a';
+
                 $file_data[] = array(
                     '<input type="checkbox" class="checkbox">',
-                    $file->phone_number,
+                    $phone_number,
                     $file->username,
                     $file->firstname,
                     $file->middlename,
@@ -291,8 +311,13 @@ class Account extends CI_Controller {
 
         if ($prompt_type === 'edit')
         {
-            $explode_phone_number = explode('+63', $file_data[0]);
-            $phone_number = $explode_phone_number[1];
+            $phone_number = '';
+            if (!empty($file_data[0]))
+            {
+                $explode_phone_number = explode('+63', $file_data[0]);
+                $phone_number = $explode_phone_number[1];
+            }
+
             $arr_phone_number = array('phone_number' => $phone_number);
             $data = array_merge($data, $arr_phone_number);
 
@@ -378,15 +403,24 @@ class Account extends CI_Controller {
         $middlename = $this->input->post('middlename');
         $lastname = $this->input->post('lastname');
         $config = $this->config->item('form_validations');
-        $this->form_validation->set_rules($config['file_validation']);
+        $this->form_validation->set_rules($config['update_file_validation']);
 
         if ($this->form_validation->run())
         {
+            if (empty($phone_number))
+            {
+                $phone_number = NULL;
+            }
+            else
+            {
+                $phone_number = '+63' . $phone_number;
+            }
+
             $arr_data = array(
                 'job_title_id' => $job_title_id,
                 'department_id' => $department_id,
                 'username' => $username,
-                'phone_number' => '+63' . $phone_number,
+                'phone_number' => $phone_number,
                 'firstname' => $firstname,
                 'middlename' => $middlename,
                 'lastname' => $lastname
@@ -396,9 +430,8 @@ class Account extends CI_Controller {
             if ($affected_row > 0)
             {
                 $log_data = array(
-                    'account_entity_id' => $account_id,
+                    'account_id' => $account_id,
                     'table_name' => 'account',
-                    'user_id' => $this->session->userdata('user_id'),
                     'action' => 'update'
                 );
                 $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'account'));
@@ -458,9 +491,8 @@ class Account extends CI_Controller {
                 foreach ($account_id as $single_entity_id)
                 {
                     $log_data[] = array(
-                        'account_entity_id' => $single_entity_id,
+                        'account_id' => $single_entity_id,
                         'table_name' => 'account',
-                        'user_id' => $this->session->userdata('user_id'),
                         'info' => 'all',
                         'created_on' => date('Y-m-d H:i:s'),
                         'action' => 'delete'
@@ -471,9 +503,8 @@ class Account extends CI_Controller {
             else
             {
                 $log_data = array(
-                    'account_entity_id' => $account_id,
+                    'account_id' => $account_id,
                     'table_name' => 'account',
-                    'user_id' => $this->session->userdata('user_id'),
                     'info' => 'row',
                     'action' => 'delete'
                 );
@@ -486,6 +517,86 @@ class Account extends CI_Controller {
         {
             $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_delete'));
         }
+        echo json_encode($json_msg);
+    }
+
+    public function prompt_profile()
+    {
+        $account_id = $this->input->get('account_id');
+        $query_row = $this->account_model->getAccount($account_id);
+        $data['account_id'] = $query_row->id;
+        $data['username'] = $query_row->username;
+
+        $this->load->view('contents/files/profile', $data);
+    }
+
+    public function update_account_profile()
+    {
+        $account_id = $this->input->post('account-id');
+        $password = $this->input->post('password');
+
+        $config = $this->config->item('form_validations');
+        $this->form_validation->set_rules($config['update_account_profile_validation']);
+
+        if ($this->form_validation->run())
+        {
+            // Password hash for secure password
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $arr_data = array(
+                'password' => $password_hash,
+            );
+
+            $affected_row = $this->account_model->update($arr_data, $account_id);
+            if ($affected_row > 0)
+            {
+                $log_data = array(
+                    'account_id' => $account_id,
+                    'table_name' => 'account',
+                    'action' => 'update',
+                    'info' => 'account profile'
+                );
+                $json_msg = array('status' => 'success', 'msg' => sprintf($this->lang->line('success_form_update'), 'profile'));
+                $this->log_model->save($log_data);
+            }
+            else
+            {
+                $json_msg = array('status' => 'error', 'msg' => $this->lang->line('error_db_update'));
+            }
+        }
+        else
+        {
+            /**
+             * Store the errors ex. <p>Username invalid.</p><p>Username invalid.</p>
+             * in the variable $str_errors and change the error delimiters with space
+             */
+            $str_errors = $this->form_validation->error_string(' ', ' ');
+            /**
+             * Explode the strings using the period "." and store it in a variable 
+             * which is $explode_errors 
+             */
+            $explode_errors = explode('.', $str_errors);
+
+            /**
+             * Create a array variable $arr_errors to store the newly formatted array
+             * and loop all exploded arrays.
+             */
+            $arr_errors = array();
+            foreach ($explode_errors as $error)
+            {
+                // Trim first the errors to avoid start and end spaces
+                $trim_error = trim($error);
+                // Check if the exploded value is not empty string
+                if (!empty($trim_error))
+                {
+                    // Store the new error string in the array ending with period
+                    $arr_errors[] = $trim_error . '.';
+                }
+            }
+
+            $json_msg = array('status' => 'error', 'msg' => $arr_errors);
+        }
+
         echo json_encode($json_msg);
     }
 

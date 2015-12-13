@@ -49,7 +49,9 @@
         $('#file-list tbody').on('click', 'button', function() {
             var me = $(this);
             var data = table_data.row(me.parents('tr')).data();
-            if(data[0].indexOf('checkbox') > 0)
+            console.log(data);
+
+            if(data[0] !== null && data[0].indexOf('checkbox') > 0)
             {
                 // Removes the checkbox element in the 0 index array
                 data.shift();

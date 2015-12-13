@@ -31,7 +31,7 @@ class Message extends CI_Controller {
     {
         $priority = $this->input->post('priority');
         $message = $this->input->post('message');
-        $user_id = $this->session->userdata('user_id');
+        $account_id = $this->session->userdata('account_id');
         $config = $this->config->item('form_validations');
         $this->form_validation->set_rules($config['save_message_validation']);
 
@@ -40,7 +40,7 @@ class Message extends CI_Controller {
             $arr_data = array(
                 'priority' => $priority,
                 'message' => $message,
-                'user_id' => $user_id
+                'account_id' => $account_id
             );
 
             $entity_id = $this->message_model->save($arr_data);
@@ -48,9 +48,9 @@ class Message extends CI_Controller {
             if ($entity_id)
             {
                 $log_data = array(
-                    'message_entity_id' => $entity_id,
+                    'message_id' => $entity_id,
                     'table_name' => 'message',
-                    'user_id' => $user_id
+                    'account_id' => $account_id
                 );
 
                 $this->log_model->save($log_data);
@@ -110,8 +110,7 @@ class Message extends CI_Controller {
             $message_data = array();
             foreach ($query_results->result() as $message)
             {
-                // Check if account username is not empty if true assign the value to $username otherwise user name value will be assigned
-                $username = !empty($message->account_username) ? $message->account_username : $message->user_username;
+                $username = $message->account_username;
 
                 // Check if phone number is not empty if true assign the value $phone_number otherwise n/a value will be assigned
                 $phone_number = !empty($message->phone_number) ? $message->phone_number : $phone_number = 'n/a';

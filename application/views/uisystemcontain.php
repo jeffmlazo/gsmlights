@@ -50,7 +50,7 @@
             // Set default for admin navigations
             $is_admin = TRUE;
             $active_nav = '';
-            if ($this->session->userData('user_type') === 'employee')
+            if ($this->session->userdata('account_type') === 'employee')
             {
                 // FALSE means that the user was an employee
                 $is_admin = FALSE;
@@ -95,30 +95,7 @@
                     </li>
                 </ul>
             </li>
-
-            <?php if ($is_admin): ?>
-                <li role="presentation" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        User
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#" id="user-add">
-                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                Add
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" id="user-view-list">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                                View Users
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            <?php endif; ?>
+          
             <li role="presentation">
                 <a href="#" id="logout">
                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
@@ -169,10 +146,10 @@
                     {
                         if(id === 'profile')
                         {
-                            $.get('<?php echo base_url(); ?>user/prompt_profile', {user_id: '<?php echo $this->session->userdata('user_id'); ?>'}, function(response) {
+                            $.get('<?php echo base_url(); ?>account/prompt_profile', {account_id: '<?php echo $this->session->userdata('account_id'); ?>'}, function(response) {
                                 $.modalDisplay({
                                     titleIcon: 'wrench',
-                                    title: 'User Profile',
+                                    title: 'Account Profile',
                                     content: response
                                 });
                             });

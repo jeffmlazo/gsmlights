@@ -21,7 +21,19 @@ class Account_model extends CI_Model {
 
     public function update($data, $id)
     {
-        $this->db->set($data);
+        /**
+         * Check if last_login field will be updated only
+         * else all fields will be updated
+         */
+        if (isset($data['last_login']))
+        {
+            $this->db->set('last_login', 'NOW()', FALSE);
+        }
+        else
+        {
+            $this->db->set($data);
+        }
+
         $this->db->where('id', $id);
         $this->db->update('account');
         return $this->db->affected_rows();
@@ -46,13 +58,20 @@ class Account_model extends CI_Model {
     }
 
     /**
-     * Get the specific account
-     * @param $id the id of the specific account
-     * $return the account
+     * Get the user by username
+     * @param $data the user's username or the id
+     * $return the user
      */
-    public function getAccount($id)
+    public function getAccount($data)
     {
-        $this->db->where('id', $id);
+        if (is_numeric($data))
+        {
+            $this->db->where('id', $data);
+        }
+        else
+        {
+            $this->db->where('username', $data);
+        }
         return $this->db->get('account')->row();
     }
 
@@ -67,7 +86,7 @@ class Account_model extends CI_Model {
          * function and we also rename the column because it is required to call in the controller
          */
         $this->db->select("account.*, LOWER(DATE_FORMAT(log.created_on, '%m/%d/%Y %h:%i %p')) AS created_on, job_title.name AS job_title_name, department.name AS department_name", FALSE);
-        $this->db->join('log', 'log.account_entity_id = account.id', 'left');
+        $this->db->join('log', 'log.account_id = account.id', 'left');
         $this->db->join('job_title', 'job_title.id = account.job_title_id', 'left');
         $this->db->join('department', 'department.id = account.department_id', 'left');
         $this->db->where('action', 'create');

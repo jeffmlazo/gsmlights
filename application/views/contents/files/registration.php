@@ -1,5 +1,4 @@
-<div class="col-lg-4 col-md-4 col-sm-4"></div>
-<div class="col-lg-4 col-md-4 col-sm-4">
+<div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -34,10 +33,32 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" id="checkbox-password">
+                            Show password
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" id="checkbox-confirm-password">
+                            Show confirm password
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="phone-number">Phone Number:</label>
                     <div class="input-group">
                         <div class="input-group-addon">+63</div>
-                        <input type="text" class="form-control" id="phone-number" name="phone-number" maxlength="10" required>
+                        <input type="text" class="form-control" id="phone-number" name="phone-number" maxlength="10">
                     </div>
                     <p class="help-block">Remove "0" at the beginning. Ex. 9086805971</p>
                 </div>
@@ -68,7 +89,6 @@
         </div>
     </div>
 </div>
-<div class="col-lg-4 col-md-4 col-sm-4"></div>
 
 <script>
     $(function() {
@@ -81,7 +101,8 @@
             $.post('<?php echo base_url() ?>account/save', $(this).serialize(), function(response) {
                 var obj = $.parseJSON(response);
 
-                if(obj.status === 'success') {
+                if(obj.status === 'success')
+                {
                     $('#add-account').resetForm();
                     $('#department').focus();
                 }
@@ -89,6 +110,19 @@
                 $.alertDisplay('#add-account', obj.msg, obj.status);
             });
 
+        });
+
+        $('#checkbox-password, #checkbox-confirm-password').on('click', function() {
+            var me = $(this);
+            // Check if the currrent state of the checkbox
+            if(me.is(':checked'))
+            {
+                me.parents('.form-group').find('input:password').prop('type', 'text');
+            }
+            else
+            {
+                me.parents('.form-group').find('input:text').prop('type', 'password');
+            }
         });
     });
 </script>
