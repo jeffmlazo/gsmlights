@@ -312,7 +312,7 @@ class Account extends CI_Controller {
         if ($prompt_type === 'edit')
         {
             $phone_number = '';
-            if (!empty($file_data[0]))
+            if (!empty($file_data[0]) && stripos($phone_number, '+63') !== false)
             {
                 $explode_phone_number = explode('+63', $file_data[0]);
                 $phone_number = $explode_phone_number[1];
