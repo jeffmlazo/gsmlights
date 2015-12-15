@@ -156,6 +156,22 @@ $config['form_validations'] = array(
             'label' => 'lang:message',
             'rules' => 'trim|required|min_length[3]'
         )
+    ),
+    // These validation are for save department
+    'save_department_validation' => array(
+        array(
+            'field' => 'department',
+            'label' => 'lang:department',
+            'rules' => 'trim|required|min_length[3]'
+        )
+    ),
+    // These validation are for save job title
+    'save_job_title_validation' => array(
+        array(
+            'field' => 'job-title',
+            'label' => 'lang:job_title',
+            'rules' => 'trim|required|min_length[3]'
+        )
     )
 );
 

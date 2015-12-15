@@ -18,6 +18,7 @@ $lang['middlename'] = "Middle Name";
 $lang['lastname'] = "Last Name";
 $lang['password'] = "Password";
 $lang['confirm_password'] = "Confirm Password";
+$lang['message'] = "Message";
 
 /* End of file my_form_validation_lang.php */
 /* Location: ./application/language/english/my_form_validation_lang.php */

@@ -73,6 +73,22 @@ class Uisystemcontain extends CI_Controller {
                 redirect('account/files/display');
                 break;
 
+            case 'department-add':
+                redirect('department');
+                break;
+
+            case 'department-view':
+                $error_msg = 'View List of Department coming soon!';
+                break;
+
+            case 'job-title-add':
+                redirect('job_title');
+                break;
+
+            case 'job-title-view':
+                $error_msg = 'View List of Job Title coming soon!';
+                break;
+
             case 'message-create':
                 redirect('message');
                 break;

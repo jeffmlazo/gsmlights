@@ -72,6 +72,50 @@
                         File
                     </a>
                 </li>
+                <li role="presentation" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                        Department
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" id="department-add">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                Add
+                            </a>
+                        </li>
+                        <?php //TODO: Ability to Edit, Delete and Show list of Department?>
+                        <li>
+                            <a href="#" id="department-view">
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                View Departments
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                        Job Title
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" id="job-title-add">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                Add
+                            </a>
+                        </li>
+                        <?php //TODO: Ability to Edit, Delete and Show list of Job Title?>
+                        <li>
+                            <a href="#" id="job-title-view">
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                View Job Titles
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             <?php endif; ?>
 
             <li role="presentation" class="dropdown <?php echo $active_nav; ?>">
@@ -95,13 +139,14 @@
                     </li>
                 </ul>
             </li>
-          
+
             <li role="presentation">
                 <a href="#" id="logout">
                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                     Logout
                 </a>
             </li>
+
             <li role="presentation" class="navbar-right nav-rigth-elements">
                 <span class="text-info">
                     <strong>Welcome <a href="#" id="profile"><?php echo ucfirst($this->session->userdata('username')); ?></a></strong>
