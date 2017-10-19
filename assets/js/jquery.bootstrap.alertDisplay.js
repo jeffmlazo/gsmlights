@@ -1,7 +1,7 @@
 ;
-(function($) {
+(function ($) {
     $.extend({
-        alertDisplay: function(target, message, status) {
+        alertDisplay: function (target, message, status) {
             // Clear the first the alert that was previously appended
             $('.alert').remove();
             // Default options for success
@@ -13,7 +13,7 @@
 
             // Default options for error
             var options;
-            if(status === 'error') {
+            if (status === 'error') {
                 options = {
                     status: 'danger',
                     icon: 'alert',
@@ -37,7 +37,7 @@
                     '</div>';
 
             // Check if there are multiple or an error that was store as array
-            if(Array.isArray(message))
+            if (Array.isArray(message))
             {
                 /**
                  *  Loop all messages in a new variable and concatinate it to
@@ -46,7 +46,7 @@
                  *  ex. foreach(message as msg_val){ message[msg_val]}
                  */
                 var msg = '';
-                for(var msg_val in message)
+                for (var msg_val in message)
                 {
                     // Alert box for multiple messages
                     msg += '<div class="alert alert-' + o.status + ' alert-dismissable" role="alert">' +
@@ -64,7 +64,7 @@
 
             var msg_hidden = $(msg).hide();
             $(target).prepend(msg_hidden);
-            msg_hidden.fadeIn('slow');
+            msg_hidden.show();
         }
     });
 })(jQuery);

@@ -6,20 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GSMLights</title>
 
-        <!--Bootstrap-->
+        <!--Bootstrap styles-->
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.css" rel="stylesheet">
 
         <!--DataTables-->
         <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables.min.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables_themeroller.css" rel="stylesheet">
-
-        <!--Spinner Loader-->
-        <link href="<?php echo base_url(); ?>assets/css/spinner-loader.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/css/jquery.dataTables_themeroller.min.css" rel="stylesheet">
 
         <!--Custom Theme-->
-        <link href="<?php echo base_url(); ?>assets/css/custom-theme.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assets/css/custom-theme.min.css" rel="stylesheet">
 
         <!--HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries-->
         <!--WARNING: Respond.js doesn't work if you view the page via file://-->
@@ -33,16 +29,16 @@
         <!--jQuery (necessary for Bootstrap's JavaScript plugins)-->
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
         <!--Include all compiled plugins (below), or include individual files as needed-->
-        <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
 
         <!--Custom jQuery Libraries-->
-        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.modal.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/jquery.form.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.default.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/jquery.loader.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.modal.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.form.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.default.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.loader.min.js"></script>
 
         <!--Navigation tabs-->
         <ul class="nav nav-tabs" id="navs" style="margin: 10px;">
@@ -206,7 +202,7 @@
                             $.ajaxLoader(
                                     '#main-content',
                                     '<?php echo base_url() ?>uisystemcontain/navs/' + id,
-                                    {spinnerSize: 'large', delayTime: 1000}
+                                    {spinnerSize: 'large'}
                             );
                         }
                     }

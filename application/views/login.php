@@ -6,10 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>GSMLights Login</title>
 
-        <!-- Bootstrap -->
+        <!-- Bootstrap styles-->
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>assets/css/bootstrap-theme.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,11 +25,11 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="<?php echo base_url(); ?>assets/js/jquery-1.11.2.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 
         <!--Custom JQuery Libraries-->
-        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.min.js"></script>
 
         <div class="container" style="margin-top: 20%;">
             <div class="login-wrapper">

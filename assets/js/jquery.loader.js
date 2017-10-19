@@ -4,7 +4,6 @@
         ajaxLoader: function(target, url, options) {
             var defaults = {
                 spinnerSize: '',
-                delayTime: 2000,
                 method: 'GET',
                 data: null
             };
@@ -20,7 +19,7 @@
             }).done(function(response) {
                 setTimeout(function() {
                     $(target).removeClass("spinner-loader " + o.spinnerSize).html(response);
-                }, o.delayTime);
+                });
             });
         }
     });

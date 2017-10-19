@@ -1,3 +1,5 @@
+@import url(spinner-loader.css); /*spinner styles*/
+
 /*modal*/
 .modal-dialog{
     margin-top: 100px !important;
@@ -8,9 +10,13 @@
 }
 
 .nav-rigth-elements {
-    padding: 10px 15px;
+    padding: 10px 10px;
     border: 1px solid transparent;
     display: block;
+}
+
+.nav-rigth-elements.glyphicon {
+    font-size: 25px;
 }
 
 .btn-align-right {
