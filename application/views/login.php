@@ -31,60 +31,76 @@
         <!--Custom JQuery Libraries-->
         <script src="<?php echo base_url(); ?>assets/js/jquery.bootstrap.alertDisplay.min.js"></script>
 
-        <div class="container" style="margin-top: 20%;">
+        <div class="container" style="margin-top: 5%;">
             <div class="login-wrapper">
-                <div style="width:320px;" class="well center-block">
-                    <h1 style="color: #C14545;" class="text-center">GSMLights</h1>
-                    <form id="login" action="#" class="form-signin">
+                <div style="width:320px;" class="center-block">
+                    <div class="bg-info ">
+                        <span class="pull-left" style="margin-right: 30px; margin-left: 20px;">
+                            <p>
+                                <strong><em>Admin:</em></strong><br>
+                                Username: testadmin <br>
+                                Password: asdfgh<br><br>
+                            </p>
+                        </span>
+                        <span>
+                            <p>
+                                <strong><em>Employee:</em></strong><br>
+                                Username: testemp<br>
+                                Password: asdfgh
+                            </p>
+                        </span>
+                    </div>
+                    <div style="width:320px;" class="well center-block">
+                        <h1 style="color: #C14545;" class="text-center">GSMLights</h1>
+                        <form id="login" action="#" class="form-signin">
 
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember" id="remember" value="1"> 
-                                Keep me logged in
-                            </label>
-                        </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="remember" id="remember" value="1"> 
+                                    Keep me logged in
+                                </label>
+                            </div>
 
-                        <input type="submit" class="btn btn-lg btn-primary btn-block btn-sm" value="LOGIN">
-                    </form>
+                            <input type="submit" class="btn btn-lg btn-primary btn-block btn-sm" value="LOGIN">
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <script>
-            $(function() {
-                $('#login').on('submit', function(e) {
-                    e.preventDefault();
+            <script>
+                $(function () {
+                    $('#login').on('submit', function (e) {
+                        e.preventDefault();
 
-                    $.post('<?php echo base_url() ?>account/check_user', $(this).serialize(), function(response) {
-                        var obj = $.parseJSON(response);
+                        $.post('<?php echo base_url() ?>account/check_user', $(this).serialize(), function (response) {
+                            var obj = $.parseJSON(response);
 
-                        if(obj.status === 'success')
-                        {
-                            document.location.href = '<?php echo base_url() ?>uisystemcontain';
-                        }
-                        else
-                        {
-                            $.alertDisplay('#login', obj.msg, obj.status);
-                        }
+                            if (obj.status === 'success')
+                            {
+                                document.location.href = '<?php echo base_url() ?>uisystemcontain';
+                            } else
+                            {
+                                $.alertDisplay('#login', obj.msg, obj.status);
+                            }
+                        });
+
                     });
-
                 });
-            });
-        </script>
+            </script>
 
     </body>
 </html>

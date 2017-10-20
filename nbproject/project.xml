@@ -6,7 +6,9 @@
             <name>uisystem</name>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>asdfgh</word>
             <word>lorem</word>
+            <word>testadmin</word>
         </spellchecker-wordlist>
     </configuration>
 </project>
