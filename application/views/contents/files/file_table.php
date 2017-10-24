@@ -49,7 +49,7 @@
         $('#file-list tbody').on('click', 'button', function() {
             var me = $(this);
             var data = table_data.row(me.parents('tr')).data();
-            console.log(data);
+//            console.log(data);
 
             if(data[0] !== null && data[0].indexOf('checkbox') > 0)
             {

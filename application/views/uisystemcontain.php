@@ -153,8 +153,8 @@
         <div class="container-fluid">
             <div class="row" style="margin-top: 20px;">
 
-                <!--This is were the pop modals will be populated-->
-                <div id="modal-container"></div>
+                <!--This is were the pop up modals will be populated-->
+                <div id="ajax-modal" class="modal fade" tabindex="-1" role="dialog"></div>
 
                 <!--Main content-->
                 <div id="main-content">
